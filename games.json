@@ -1,0 +1,69 @@
+{
+  "games": [
+    {
+      "gameId": "game1",
+      "questions": [
+        {
+          "questionId": "q1",
+          "question": "What is the capital of France?",
+          "answer": "paris",
+          "coordinates": {
+            "latitude": 48.8566,
+            "longitude": 2.3522
+          },
+          "radius": 500
+        },
+        {
+          "questionId": "q2",
+          "question": "What is the largest planet in our solar system?",
+          "answer": "jupiter",
+          "coordinates": {
+            "latitude": 23.6978,
+            "longitude": 120.9605
+          },
+          "radius": 1000
+        },
+        {
+          "questionId": "q3",
+          "question": "What is the smallest country in the world?",
+          "answer": "vatican city",
+          "coordinates": {
+            "latitude": 41.9029,
+            "longitude": 12.4534
+          },
+          "radius": 200
+        },
+        {
+          "questionId": "q4",
+          "question": "What is the chemical symbol for gold?",
+          "answer": "au",
+          "coordinates": {
+            "latitude": 40.7128,
+            "longitude": -74.006
+          },
+          "radius": 300
+        },
+        {
+          "questionId": "q5",
+          "question": "Who wrote 'To Kill a Mockingbird'?",
+          "answer": "harper lee",
+          "coordinates": {
+            "latitude": 34.7304,
+            "longitude": -86.5861
+          },
+          "radius": 400
+        },
+        {
+          "questionId": "q6",
+          "question": "What is the hardest natural substance on Earth?",
+          "answer": "diamond",
+          "coordinates": {
+            "latitude": 35.6895,
+            "longitude": 139.6917
+          },
+          "radius": 500
+        }
+      ]
+    }
+  ]
+}
