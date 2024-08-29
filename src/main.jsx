@@ -9,3 +9,6 @@ createRoot(document.getElementById("root")).render(
     <App />
   </Provider>
 );
+
+//to do :
+// reapirt bug with next question after click previuos

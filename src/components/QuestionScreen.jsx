@@ -24,20 +24,22 @@ export default function QuestionScreen() {
   console.log(currentQuestionAndAnswer);
   function nextQuestionHandler() {
     dispatch(
-      gameDataActions.setCurrentQuestion(
-        currentGameQuestions[currentQuestionIndex + 1]
-      )
+      gameDataActions.setCurrentQuestion({
+        question: currentGameQuestions[currentQuestionIndex + 1],
+        correctAnswer: null,
+      })
     );
 
     dispatch(gameDataActions.incrementCurrentQuestionIndex());
   }
   function previousQuestionHandler() {
     dispatch(
-      gameDataActions.setCurrentQuestion(
-        currentGameQuestions[currentQuestionIndex - 1]
-      )
+      gameDataActions.setCurrentQuestion({
+        question: currentGameQuestions[currentQuestionIndex - 1],
+        correctAnswer: true,
+      })
     );
-    dispatch(gameDataActions.setCorrectAnswer(true));
+
     dispatch(gameDataActions.decrementCurrentQuestionIndex());
   }
 

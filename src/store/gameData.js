@@ -24,8 +24,9 @@ const gameData = createSlice({
       state.currentQuestion.question = state.currentGameQuestions[0];
     },
     setCurrentQuestion: (state, action) => {
-      state.currentQuestion.question = action.payload;
-      state.currentQuestion.correctAnswer = null;
+      state.currentQuestion.question = action.payload.question;
+      state.currentQuestion.correctAnswer =
+        action.payload.correctAnswer || null;
     },
     setGameIsStarted: (state, action) => {
       state.gameisStared = action.payload;
