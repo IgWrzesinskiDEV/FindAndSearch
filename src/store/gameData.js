@@ -21,12 +21,17 @@ const gameData = createSlice({
       );
 
       state.currentGameQuestions = questions;
-      state.currentQuestion.question = state.currentGameQuestions[0];
+      //state.currentQuestion.question = state.currentGameQuestions[0];
+      state.questionsDispleyed.push({
+        question: questions[0],
+        correctAnswer: null,
+        questionIndex: 0,
+      });
     },
     setCurrentQuestion: (state, action) => {
-      state.currentQuestion.question = action.payload.question;
-      state.currentQuestion.correctAnswer =
-        action.payload.correctAnswer || null;
+      state.currentQuestion = action.payload;
+      // state.currentQuestion.correctAnswer = action.payload.correctAnswer;
+      // state.currentQuestion.questionIndex = action.payload.questionIndex;
     },
     setGameIsStarted: (state, action) => {
       state.gameisStared = action.payload;
@@ -37,11 +42,12 @@ const gameData = createSlice({
     decrementCurrentQuestionIndex: (state) => {
       state.currentQuestionIndex--;
     },
-    setQuestionsDispleyed: (state, action) => {
+    pushQuestionsDispleyed: (state, action) => {
       state.questionsDispleyed.push(action.payload);
     },
-    setCorrectAnswer(state, action) {
-      state.currentQuestion.correctAnswer = action.payload;
+    setAnswerState: (state, action) => {
+      state.questionsDispleyed[state.currentQuestionIndex].correctAnswer =
+        action.payload;
     },
   },
 });

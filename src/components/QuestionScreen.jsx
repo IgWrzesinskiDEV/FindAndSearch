@@ -4,6 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import { gameDataActions } from "../store/gameData";
 export default function QuestionScreen() {
+  const questionsDispleyed = useSelector(
+    (state) => state.game.questionsDispleyed
+  );
   const currentGameQuestions = useSelector(
     (state) => state.game.currentGameQuestions
   );
@@ -11,26 +14,25 @@ export default function QuestionScreen() {
     (state) => state.game.currentQuestionIndex
   );
   const dispatch = useDispatch();
-  const currentQuestion = useSelector(
-    (state) => state.game.currentQuestion.question
-  );
-  const currentQuestionAndAnswer = useSelector(
-    (state) => state.game.currentQuestion
-  );
-  const correctAnswer = useSelector(
-    (state) => state.game.currentQuestion.correctAnswer
-  );
+  //const crrQuestion = questionsDispleyed[currentQuestionIndex];
 
-  console.log(currentQuestionAndAnswer);
+  const currentQuestion = questionsDispleyed[currentQuestionIndex].question;
+  const iscorrectAnswer =
+    questionsDispleyed[currentQuestionIndex].correctAnswer;
+
   function nextQuestionHandler() {
-    dispatch(
-      gameDataActions.setCurrentQuestion({
-        question: currentGameQuestions[currentQuestionIndex + 1],
-        correctAnswer: null,
-      })
-    );
-
-    dispatch(gameDataActions.incrementCurrentQuestionIndex());
+    if (currentQuestionIndex === questionsDispleyed.length - 1) {
+      dispatch(
+        gameDataActions.pushQuestionsDispleyed({
+          question: currentGameQuestions[currentQuestionIndex + 1],
+          correctAnswer: null,
+          questionIndex: currentQuestionIndex + 1,
+        })
+      );
+      dispatch(gameDataActions.incrementCurrentQuestionIndex());
+    } else {
+      dispatch(gameDataActions.incrementCurrentQuestionIndex());
+    }
   }
   function previousQuestionHandler() {
     dispatch(
@@ -58,7 +60,7 @@ export default function QuestionScreen() {
         label={currentQuestion.question}
         name="gameQuestion"
       />
-      {correctAnswer && (
+      {iscorrectAnswer && (
         <>
           <p className="mt-6 text-2xl font-bold">Correct Answer!</p>
           <p className="mt-6 text-xl font-bold">Go to next location!</p>
@@ -68,7 +70,7 @@ export default function QuestionScreen() {
           />
         </>
       )}
-      {!correctAnswer && correctAnswer !== null && (
+      {!iscorrectAnswer && iscorrectAnswer !== null && (
         <p className="mt-6 text-2xl font-bold">Incorrect Answer!</p>
       )}
       <p className="flex justify-around w-full my-6">
@@ -81,7 +83,7 @@ export default function QuestionScreen() {
             Previous question
           </button>
         )}
-        {correctAnswer &&
+        {iscorrectAnswer &&
           currentGameQuestions.length - 1 !== currentQuestionIndex && (
             <button
               onClick={nextQuestionHandler}

@@ -18,7 +18,7 @@ export default function StartScreen() {
         {currentGame !== null && currentGame !== -1 && (
           <>
             <p className="mt-5">Game found!</p>
-            <Timer initialTimer={1} />
+            <Timer initialTimer={3} />
           </>
         )}
         {currentGame === -1 && <p className="mt-5">Game not found!</p>}
