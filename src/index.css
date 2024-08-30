@@ -30,6 +30,17 @@
   vertical-align: baseline;
 }
 
+::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+dialog {
+  display: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 /* HTML5 display-role reset for older browsers */
 article,
 aside,

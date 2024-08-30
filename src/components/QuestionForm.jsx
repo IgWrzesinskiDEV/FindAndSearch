@@ -47,7 +47,7 @@ export default function QuestionForm({ label, name, placeholder }) {
         className="p-2 placeholder:p-2"
       />
       <button
-        className="w-1/3 p-2 mt-2 border-2 rounded-md border-sky-500 disabled:opacity-50"
+        className="w-1/3 p-2 mt-2 border-2 rounded-md border-blueBorder disabled:opacity-50"
         disabled={isDisabled}
       >
         Click!
