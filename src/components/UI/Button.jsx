@@ -1,8 +1,11 @@
-export default function Button({ onClick, children }) {
+import { twMerge } from 'tailwind-merge'
+
+
+export default function Button({ children, className, ...props }) {
     return (
         <button
-            onClick={onClick}
-            className=" border-2 border-sky-500  text-white font-bold py-2 px-4 rounded"
+            {...props}
+            className={twMerge(" border-2 border-primary outline-none  text-white font-bold py-2 px-4 rounded flex items-center justify-center gap-2", className)}
         >
             {children}
         </button>
