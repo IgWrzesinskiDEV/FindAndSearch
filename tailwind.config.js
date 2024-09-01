@@ -7,6 +7,7 @@ export default {
         primary: "#0ea5e9",
         primaryDarker: "#075985",
         primaryLighter: "#38bdf8",
+        bgcColor: "#242424"
       }
     },
   },

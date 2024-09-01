@@ -26,15 +26,17 @@ const TablePopOver = forwardRef(function TablePopOver({ children }, ref) {
     const id = open ? 'simple-popover' : undefined;
 
     return createPortal((
-        <div>
+        <div >
             {/* <Button aria-describedby={id} variant="contained" onClick={handleClick}>
                 Open Popover
             </Button> */}
             <Popover
                 id={id}
+
                 open={open}
                 anchorEl={anchorEl}
                 onClose={handleClose}
+                sx={{ left: "-1px" }}
                 anchorOrigin={{
                     vertical: 'bottom',
                     horizontal: 'left',

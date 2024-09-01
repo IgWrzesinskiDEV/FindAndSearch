@@ -44,11 +44,7 @@ export default function NewGame() {
                         </tbody>
                     </table>}
                     <div id="popOver"></div>
-                    {/* <ul>
 
-                        {newGameQuestions.map((question, index) => (
-                            <NewQuestion question={question} key={question.id} />))}
-                    </ul> */}
                     <Button onClick={openModalHandler} type="button">Add question <FaPlus /></Button>
                     <Button className="">Add game</Button>
                 </form>

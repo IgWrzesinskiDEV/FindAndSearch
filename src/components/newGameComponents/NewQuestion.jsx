@@ -2,6 +2,9 @@
 import QuestionField from "./QuestionField";
 import TablePopOver from "../UI/TablePopOver";
 import { useRef } from "react";
+import { MdEditNote } from "react-icons/md";
+import { FaRegCircleXmark } from "react-icons/fa6";
+import { twMerge } from "tailwind-merge";
 export default function NewQuestion({ question }) {
     const popRef = useRef();
     const tdClass = "border-2 border-primary p-3";
@@ -19,7 +22,17 @@ export default function NewQuestion({ question }) {
                 <td className={tdClass} >{question.radius}</td>
 
             </tr >
-            <TablePopOver ref={popRef} />
+            <TablePopOver ref={popRef} >
+                <div className="flex flex-col w-fit h-full justify-center border-2 border-primaryDarker bg-bgcColor text-stone-200 p-y-2 ">
+                    <button className="flex  items-center p-2 justify-start">
+                        <MdEditNote className="text-3xl text-yellow-100 mr-2" />Edit
+                    </button>
+                    <hr className="h-[3px] border-primary" />
+                    <button className="flex p-2 items-center justify-start">
+                        <FaRegCircleXmark className="text-2xl text-red-500 mr-2" />Delete
+                    </button>
+                </div>
+            </TablePopOver>
 
         </>
         // <li className="flex flex-wrap items-center gap-y-3 border-primary border-2 w-full p-4 justify-between">
