@@ -1,20 +1,26 @@
-import QuestionField from "./QuestionField";
 
+import QuestionField from "./QuestionField";
+import TablePopOver from "../UI/TablePopOver";
+import { useRef } from "react";
 export default function NewQuestion({ question }) {
+    const popRef = useRef();
     const tdClass = "border-2 border-primary p-3";
+    function openPopOver(event) {
+        popRef.current.openPop(event);
+    }
     return (
         <>
-            <button popovertarget="myheader" type="button">click</button>
-            <tr className=" border-2 border-primary bg-stone-700 hover:bg-primaryDarker  odd:bg-stone-800 "  >
+
+            <tr className=" border-2 border-primary bg-stone-700 hover:bg-primaryDarker  odd:bg-stone-800 relative" variant="contained" onClick={openPopOver}>
                 <td className={tdClass} >{question.questionText}</td>
                 <td className={tdClass} >{question.answer}</td>
                 <td className={tdClass} >{question.latitude}</td>
                 <td className={tdClass} >{question.longitude}</td>
                 <td className={tdClass} >{question.radius}</td>
+
             </tr >
-            <div popover="auto" id="myheader" >
-                popover
-            </div>
+            <TablePopOver ref={popRef} />
+
         </>
         // <li className="flex flex-wrap items-center gap-y-3 border-primary border-2 w-full p-4 justify-between">
 

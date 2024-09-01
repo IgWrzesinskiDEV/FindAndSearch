@@ -27,18 +27,23 @@ export default function NewGame() {
                 <h1 className="text-center">Add new Game here!</h1>
                 <form className="flex flex-col gap-y-4 items-center">
                     <Input label="Choose a id for your game!" placeholder="game ID" name="gameId" className="w-1/2" />
-                    <table className="table-auto border-2 border-primary ">
-                        <tr >
-                            <th className={thClass}>Question</th>
-                            <th className={thClass}>Answer</th>
-                            <th className={thClass}>Latitude</th>
-                            <th className={thClass}>Longitude</th>
-                            <th className={thClass}>Radius</th>
+                    {newGameQuestions.length > 0 && <table className="table-auto border-2 border-primary ">
+                        <thead>
+                            <tr >
+                                <th className={thClass}>Question</th>
+                                <th className={thClass}>Answer</th>
+                                <th className={thClass}>Latitude</th>
+                                <th className={thClass}>Longitude</th>
+                                <th className={thClass}>Radius</th>
 
-                        </tr>
-                        {newGameQuestions.map((question, index) => (
-                            <NewQuestion question={question} key={question.id} />))}
-                    </table>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {newGameQuestions.map((question, index) => (
+                                <NewQuestion question={question} key={question.id} />))}
+                        </tbody>
+                    </table>}
+                    <div id="popOver"></div>
                     {/* <ul>
 
                         {newGameQuestions.map((question, index) => (
