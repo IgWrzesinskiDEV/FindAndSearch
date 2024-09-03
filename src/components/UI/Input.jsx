@@ -3,12 +3,24 @@ import { forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
 
 const Input = forwardRef(function Input(
-  { label, name, type = "text", error, editedValue = "", ...props },
+  {
+    label,
+    name,
+    type = "text",
+    error,
+    editedValue = "",
+    labelClassName = "",
+    ...props
+  },
   ref
 ) {
   return (
     <div className="flex flex-col items-center w-full gap-y-2">
-      {label && <label htmlFor={name}>{label}</label>}
+      {label && (
+        <label htmlFor={name} className={labelClassName}>
+          {label}
+        </label>
+      )}
       <input
         type={type}
         name={name}

@@ -12,10 +12,10 @@ export default function StartGameForm({ placeholder, label, name }) {
   }
   return (
     <form
-      className="flex flex-col w-3/4 mx-auto gap-3 justify-center items-center h-[20vh] border-2 border-sky-500 rounded-md"
+      className="flex flex-col items-center justify-center w-3/4 gap-3 p-4 mx-auto border-2 rounded-md border-sky-500"
       onSubmit={submitHandler}
     >
-      <label htmlFor={name} className="">
+      <label htmlFor={name} className="text-lg text-center lg:text-3xl">
         {label}
       </label>
       <input
@@ -24,7 +24,7 @@ export default function StartGameForm({ placeholder, label, name }) {
         placeholder={placeholder}
         className="p-2"
       />
-      <button className="w-1/3 p-2 mt-2 border-2 rounded-md border-sky-500">
+      <button className="w-1/4 p-2 mt-2 border-2 rounded-md border-sky-500">
         Click!
       </button>
     </form>

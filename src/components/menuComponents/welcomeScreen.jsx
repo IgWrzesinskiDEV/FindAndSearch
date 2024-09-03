@@ -4,6 +4,7 @@ export default function WelcomeScreen() {
       <h1 className="my-5 text-2xl font-bold text-red-600 uppercase">
         Welcome to the Find and Search Game!
       </h1>
+      <img src="" alt="" />
       <h2 className="my-5 text-2xl font-bold uppercase text-cyan-500">
         To start game click this button
       </h2>

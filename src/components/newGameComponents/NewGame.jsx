@@ -1,15 +1,13 @@
 import AddNewQuestion from "./AddNewQuestion";
-import Input from "../UI/Input";
 import Button from "../UI/Button";
 import Modal from "../UI/Modal";
 import { useRef } from "react";
-import { FaPlus } from "react-icons/fa6";
 import { FaRegCircleXmark } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import { postNewGame } from "../../store/newGameStore/newGamesActions";
 import { useDispatch } from "react-redux";
-import NewQuestion from "./NewQuestion";
-import Notification from "../UI/Notification";
+
+import AddNewGameSection from "./AddNewGameSection";
 
 export default function NewGame() {
   const dispatch = useDispatch();
@@ -50,7 +48,7 @@ export default function NewGame() {
 
   // closeModalHandler(confirmModalRef);
 
-  const thClass = "border-2 p-4 border-primary";
+  // const thClass = "border-2 p-4 border-primary";
   return (
     <>
       <Modal ref={newQuestionsModalRef}>
@@ -81,52 +79,11 @@ export default function NewGame() {
           </Button>
         </div>
       </Modal>
-      <div className="flex flex-col items-center gap-4">
-        <h1 className="text-center">Add new Game here!</h1>
-        <form className="flex flex-col items-center gap-y-4">
-          <Input
-            label="Choose a id for your game!"
-            placeholder="game ID"
-            name="gameId"
-            ref={gameIdRef}
-            className="w-1/2"
-          />
-          {newGameQuestions.length > 0 && (
-            <table className="border-2 table-auto border-primary ">
-              <thead>
-                <tr>
-                  <th className={thClass}>Question</th>
-                  <th className={thClass}>Answer</th>
-                  <th className={thClass}>Latitude</th>
-                  <th className={thClass}>Longitude</th>
-                  <th className={thClass}>Radius</th>
-                </tr>
-              </thead>
-              <tbody>
-                {newGameQuestions.map((question) => (
-                  <NewQuestion question={question} key={question.id} />
-                ))}
-              </tbody>
-            </table>
-          )}
-          <div id="popOver"></div>
-
-          <Button
-            onClick={() => openModalHandler(newQuestionsModalRef)}
-            type="button"
-          >
-            Add question <FaPlus />
-          </Button>
-          <Button
-            onClick={() => openModalHandler(confirmModalRef)}
-            type="button"
-            disabled={newGameQuestions.length === 0}
-          >
-            Add game
-          </Button>
-        </form>
-      </div>
-      <Notification />
+      <AddNewGameSection
+        openModalHandler={openModalHandler}
+        newQuestionsModalRef={newQuestionsModalRef}
+        confirmModalRef={confirmModalRef}
+      />
     </>
   );
 }
