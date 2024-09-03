@@ -7,7 +7,7 @@ export default function StartScreen() {
   return (
     <>
       <header className="flex flex-col items-center">
-        <h1 className="my-5 text-2xl font-bold text-sky-400 uppercase">
+        <h1 className="my-5 text-2xl font-bold uppercase text-sky-400">
           Welcome to the game!
         </h1>
         <StartGameForm

@@ -1,48 +1,89 @@
+/* eslint-disable react/prop-types */
 
-import QuestionField from "./QuestionField";
 import TablePopOver from "../UI/TablePopOver";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { MdEditNote } from "react-icons/md";
+// import { FaRegCircleXmark } from "react-icons/fa6";
+import { FaTrashAlt } from "react-icons/fa";
 import { FaRegCircleXmark } from "react-icons/fa6";
+import { useDispatch } from "react-redux";
+import { newGameDataActions } from "../../store/newGameData";
 import { twMerge } from "tailwind-merge";
+import Modal from "../UI/Modal";
+import AddNewQuestion from "./AddNewQuestion";
 export default function NewQuestion({ question }) {
-    const popRef = useRef();
-    const tdClass = "border-2 border-primary p-3";
-    function openPopOver(event) {
-        popRef.current.openPop(event);
-    }
-    return (
-        <>
+  const popRef = useRef();
+  const modalRef = useRef();
+  const dispatch = useDispatch();
+  const [isSelected, setIsSelected] = useState(false);
 
-            <tr className=" border-2 border-primary bg-stone-700 hover:bg-primaryDarker  odd:bg-stone-800 relative" variant="contained" onClick={openPopOver}>
-                <td className={tdClass} >{question.questionText}</td>
-                <td className={tdClass} >{question.answer}</td>
-                <td className={tdClass} >{question.latitude}</td>
-                <td className={tdClass} >{question.longitude}</td>
-                <td className={tdClass} >{question.radius}</td>
+  function openPopOver(event) {
+    popRef.current.openPop(event);
+    setIsSelected(true);
+  }
+  function deleteQuestionHandler(id) {
+    dispatch(newGameDataActions.deleteNewGameQuestion(id));
+  }
+  function editQuestionHandler() {
+    openModalHandler();
+    popRef.current.closePop();
+  }
 
-            </tr >
-            <TablePopOver ref={popRef} >
-                <div className="flex flex-col w-fit h-full justify-center border-2 border-primaryDarker bg-bgcColor text-stone-200 p-y-2 ">
-                    <button className="flex  items-center p-2 justify-start">
-                        <MdEditNote className="text-3xl text-yellow-100 mr-2" />Edit
-                    </button>
-                    <hr className="h-[3px] border-primary" />
-                    <button className="flex p-2 items-center justify-start">
-                        <FaRegCircleXmark className="text-2xl text-red-500 mr-2" />Delete
-                    </button>
-                </div>
-            </TablePopOver>
+  function openModalHandler() {
+    modalRef.current.open();
+  }
+  function closeModalHandler() {
+    modalRef.current.close();
+  }
+  const tdClass = "border-2 border-primary p-3";
+  const trBgClass = isSelected
+    ? " bg-primaryDarker"
+    : " bg-stone-700 odd:bg-stone-800";
 
-        </>
-        // <li className="flex flex-wrap items-center gap-y-3 border-primary border-2 w-full p-4 justify-between">
-
-        //     <QuestionField textLabel="Question:" text={question.questionText} className="basis-1/2" />
-        //     <QuestionField textLabel="Answer:" text={question.answer} className="basis-1/2" />
-        //     <QuestionField textLabel="Latitude:" text={question.latitude} />
-        //     <QuestionField textLabel="Longitude:" text={question.longitude} />
-        //     <QuestionField textLabel="Radius:" text={question.radius} />
-
-        // </li>
-    );
+  return (
+    <>
+      <Modal ref={modalRef}>
+        <button className="absolute top-5 right-5" onClick={closeModalHandler}>
+          <FaRegCircleXmark className="text-3xl text-red-500" />
+        </button>
+        <AddNewQuestion
+          onCloseModal={closeModalHandler}
+          title="Edit Question"
+          editedQuestion={question}
+        />
+      </Modal>
+      <tr
+        className={twMerge(
+          "relative border-2 cursor-pointer border-primary  hover:bg-primaryDarker  ",
+          trBgClass
+        )}
+        onClick={openPopOver}
+      >
+        <td className={tdClass}>{question.questionText}</td>
+        <td className={tdClass}>{question.answer}</td>
+        <td className={tdClass}>{question.latitude}</td>
+        <td className={tdClass}>{question.longitude}</td>
+        <td className={tdClass}>{question.radius}</td>
+      </tr>
+      <TablePopOver ref={popRef} setIsSelected={setIsSelected}>
+        <div className="flex flex-col justify-center h-full border-2 border-t-0 w-fit border-primaryDarker bg-bgcColor text-stone-200 p-y-2 ">
+          <button
+            className="flex items-center justify-start p-2 group"
+            onClick={editQuestionHandler}
+          >
+            <MdEditNote className="mr-2 text-3xl text-yellow-100 duration-300 ease-out group-hover:scale-110 transiton" />
+            Edit
+          </button>
+          <hr className=" border-primary" />
+          <button
+            className="flex items-center justify-start p-2 group"
+            onClick={() => deleteQuestionHandler(question.id)}
+          >
+            <FaTrashAlt className="mr-2 text-2xl text-red-500 duration-300 ease-out group-hover:scale-110 transiton" />
+            Delete
+          </button>
+        </div>
+      </TablePopOver>
+    </>
+  );
 }
