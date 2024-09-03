@@ -22,6 +22,9 @@ const newGameData = createSlice({
       );
       state.newGameQuestions[index] = action.payload;
     },
+    resetNewGameQuestions(state) {
+      state.newGameQuestions = [];
+    },
   },
 });
 

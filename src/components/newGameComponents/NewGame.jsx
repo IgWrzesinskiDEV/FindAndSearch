@@ -9,6 +9,8 @@ import { useSelector } from "react-redux";
 import { postNewGame } from "../../store/newGameStore/newGamesActions";
 import { useDispatch } from "react-redux";
 import NewQuestion from "./NewQuestion";
+import Notification from "../UI/Notification";
+
 export default function NewGame() {
   const dispatch = useDispatch();
   const gameIdRef = useRef();
@@ -19,21 +21,34 @@ export default function NewGame() {
   const confirmModalRef = useRef();
   function openModalHandler(modalRef) {
     modalRef.current.open();
+
+    console.log("das");
   }
   function closeModalHandler(modalRef) {
     modalRef.current.close();
   }
   console.log(newGameQuestions);
 
-  function addGameToDbHandler() {
+  async function addGameToDbHandler() {
     const game = {
       id: gameIdRef.current.value,
       questions: newGameQuestions,
     };
     console.log(game);
-    dispatch(postNewGame(game));
-    closeModalHandler(confirmModalRef);
+    try {
+      closeModalHandler(confirmModalRef);
+      await dispatch(postNewGame(game));
+      // Reset gameIdRef only after dispatch completes successfully
+      gameIdRef.current.value = "";
+    } catch (error) {
+      console.error("Failed to post new game:", error);
+      // Optionally handle the error
+    }
   }
+  // dispatch(postNewGame(game));
+  // gameIdRef.current.value = "";
+
+  // closeModalHandler(confirmModalRef);
 
   const thClass = "border-2 p-4 border-primary";
   return (
@@ -111,6 +126,7 @@ export default function NewGame() {
           </Button>
         </form>
       </div>
+      <Notification />
     </>
   );
 }

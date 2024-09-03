@@ -1,34 +1,23 @@
 import { gameDataActions } from "./gameData";
+import { toast } from "react-toastify";
+import { db } from "../../firebase/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 export const fetchGameId = (gameId) => {
   return async (dispatch) => {
-    const fetchData = async () => {
-      const response = await fetch(
-        "https://teraingame-c3b54-default-rtdb.europe-west1.firebasedatabase.app/games.json"
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch data");
-      }
-      const responseData = await response.json();
-      console.log(responseData);
-
-      return responseData;
-      //
-    };
     try {
-      const gameData = await fetchData();
+      const gameRef = doc(db, "games", gameId);
+      const gameDoc = await getDoc(gameRef);
 
-      const game = gameData.find((game) => {
-        return game.gameId === gameId;
-      });
-      if (game) {
-        dispatch(gameDataActions.setCurrentGame(game));
-
+      if (gameDoc.exists()) {
+        console.log(gameDoc.data());
+        dispatch(gameDataActions.setCurrentGame(gameDoc.data()));
         dispatch(gameDataActions.setCurrentGameQuestions());
       } else {
         dispatch(gameDataActions.setCurrentGame(-1));
       }
     } catch (err) {
+      toast.error("Failed to find new game");
       console.log(err);
     }
   };

@@ -1,9 +1,9 @@
-//import { newGameDataActions } from "./newGameData";
+import { toast } from "react-toastify";
 import { db } from "../../firebase/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
-
+import { newGameDataActions } from "./newGameData";
 // Add a new document in collection "cities"
-
+import { hashCorrectAnswer } from "../../hashing";
 export const postNewGame = (game) => {
   return async (dispatch) => {
     try {
@@ -11,18 +11,29 @@ export const postNewGame = (game) => {
       const gameDoc = await getDoc(gameRef);
 
       if (!gameDoc.exists()) {
-        await setDoc(gameRef, { questions: game.questions });
-        console.log("Document written with ID: ", game.id);
+        const questions = await Promise.all(
+          game.questions.map(async (question) => {
+            return {
+              ...question,
+              answer: await hashCorrectAnswer(question.answer.toLowerCase()),
+            };
+          })
+        );
+        console.log(questions);
+
+        await toast.promise(setDoc(gameRef, { questions: questions }), {
+          pending: "Sending game... 🚀",
+          success: "Game has been added successfully 👌",
+          error: "Failed to upload a game 🤯",
+        });
+        dispatch(newGameDataActions.resetNewGameQuestions());
       } else {
-        throw new Error(`Game with ID ${game.id} already exists.`);
+        toast.warn(`Game with ID:${game.id} already exists. 
+          Please choose another ID.`);
       }
     } catch (err) {
+      toast.error("Failed to post new game");
       console.log(err);
     }
   };
 };
-// TODO:
-//1. dodac powiadomienie że dana gra już istnieje
-//2.dodac tostowanie że gra została dodana
-//3. po dodaniu gry usunać pytania z newGameQuestions i zresetowac input gameId
-//4. wuszukać daną grę po id a nastepnie  odczytac dane z bazy danych gry by móc w nia grać

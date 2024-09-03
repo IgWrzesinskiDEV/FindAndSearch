@@ -13,10 +13,10 @@ const mapContainerStyle = {
 
 const defaultZoom = 18;
 
-const Map = ({ coordinates, radius }) => {
+const Map = ({ lat, lng, radius }) => {
   const cords = {
-    lat: coordinates.latitude,
-    lng: coordinates.longitude,
+    lat: +lat,
+    lng: +lng,
   };
 
   return (
@@ -31,7 +31,7 @@ const Map = ({ coordinates, radius }) => {
       >
         <Circle
           center={cords}
-          radius={radius} // Radius in meters
+          radius={+radius} // Radius in meters
           options={{
             fillColor: "#FF0000", // Red fill color
             fillOpacity: 0.3, // 30% opacity

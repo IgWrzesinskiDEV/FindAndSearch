@@ -2,6 +2,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
 import { gameDataActions } from "../../store/currentGameStore/gameData";
+import { checkUserAnswer } from "../../hashing";
 export default function QuestionForm({ label, name, placeholder }) {
   const dispatch = useDispatch();
   const correctAnswer = useSelector(
@@ -21,7 +22,7 @@ export default function QuestionForm({ label, name, placeholder }) {
     e.preventDefault();
     const userAnswer = inputRef.current.value;
 
-    if (userAnswer.toLowerCase() === currentQuestionAnswer) {
+    if (checkUserAnswer(userAnswer.toLowerCase(), currentQuestionAnswer)) {
       isDisabled = true;
       dispatch(gameDataActions.setAnswerState(true));
       //dispatch(gameDataActions.);

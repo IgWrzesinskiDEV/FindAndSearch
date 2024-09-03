@@ -15,10 +15,14 @@ export default function QuestionScreen() {
   );
   const dispatch = useDispatch();
   //const crrQuestion = questionsDispleyed[currentQuestionIndex];
+  console.log(questionsDispleyed, "questionsDispleyed");
+  console.log(currentGameQuestions, "currentGameQuestions");
+  console.log(currentQuestionIndex, "currentQuestionIndex");
 
   const currentQuestion = questionsDispleyed[currentQuestionIndex].question;
   const iscorrectAnswer =
     questionsDispleyed[currentQuestionIndex].correctAnswer;
+  console.log(currentQuestion, "currentQuestion");
 
   function nextQuestionHandler() {
     if (currentQuestionIndex === questionsDispleyed.length - 1) {
@@ -57,7 +61,7 @@ export default function QuestionScreen() {
       </h2>
       <QuestionForm
         placeholder="Type correct answer"
-        label={currentQuestion.question}
+        label={currentQuestion.questionText}
         name="gameQuestion"
       />
       {iscorrectAnswer && (
@@ -65,7 +69,8 @@ export default function QuestionScreen() {
           <p className="mt-6 text-2xl font-bold">Correct Answer!</p>
           <p className="mt-6 text-xl font-bold">Go to next location!</p>
           <Map
-            coordinates={currentQuestion.coordinates}
+            lat={currentQuestion.latitude}
+            lng={currentQuestion.longitude}
             radius={currentQuestion.radius}
           />
         </>
