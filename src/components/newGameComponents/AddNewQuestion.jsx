@@ -4,7 +4,7 @@ import Input from "../UI/Input";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import isEmpty from "../../validate";
-import { newGameDataActions } from "../../store/newGameData";
+import { newGameDataActions } from "../../store/newGameStore/newGameData";
 export default function AddNewQuestion({
   onCloseModal,
   title,

@@ -2,7 +2,7 @@ import QuestionForm from "./QuestionForm";
 import Map from "./Map";
 import { useSelector, useDispatch } from "react-redux";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
-import { gameDataActions } from "../../store/gameData";
+import { gameDataActions } from "../../store/currentGameStore/gameData";
 export default function QuestionScreen() {
   const questionsDispleyed = useSelector(
     (state) => state.game.questionsDispleyed

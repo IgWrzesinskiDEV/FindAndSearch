@@ -10,6 +10,7 @@ export const fetchGameId = (gameId) => {
         throw new Error("Failed to fetch data");
       }
       const responseData = await response.json();
+      console.log(responseData);
 
       return responseData;
       //

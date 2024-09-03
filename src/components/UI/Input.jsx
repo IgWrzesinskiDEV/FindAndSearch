@@ -1,20 +1,18 @@
 /* eslint-disable react/prop-types */
+import { forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
 
-export default function Input({
-  label,
-  name,
-  type = "text",
-  error,
-  editedValue = "",
-  ...props
-}) {
+const Input = forwardRef(function Input(
+  { label, name, type = "text", error, editedValue = "", ...props },
+  ref
+) {
   return (
     <div className="flex flex-col items-center w-full gap-y-2">
       {label && <label htmlFor={name}>{label}</label>}
       <input
         type={type}
         name={name}
+        ref={ref}
         defaultValue={editedValue}
         {...props}
         className={twMerge(
@@ -25,4 +23,5 @@ export default function Input({
       {error && <p className="text-red-500">Required value</p>}
     </div>
   );
-}
+});
+export default Input;

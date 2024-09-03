@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
-import { gameDataActions } from "../../store/gameData";
+import { gameDataActions } from "../../store/currentGameStore/gameData";
 export default function QuestionForm({ label, name, placeholder }) {
   const dispatch = useDispatch();
   const correctAnswer = useSelector(

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { gameDataActions } from "../store/gameData";
+import { gameDataActions } from "../store/currentGameStore/gameData";
 // eslint-disable-next-line react/prop-types
 export default function Timer({ initialTimer }) {
   const [time, setTime] = useState(initialTimer);

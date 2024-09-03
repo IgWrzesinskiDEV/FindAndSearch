@@ -7,7 +7,7 @@ import { MdEditNote } from "react-icons/md";
 import { FaTrashAlt } from "react-icons/fa";
 import { FaRegCircleXmark } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
-import { newGameDataActions } from "../../store/newGameData";
+import { newGameDataActions } from "../../store/newGameStore/newGameData";
 import { twMerge } from "tailwind-merge";
 import Modal from "../UI/Modal";
 import AddNewQuestion from "./AddNewQuestion";

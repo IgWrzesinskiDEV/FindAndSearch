@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useDispatch } from "react-redux";
-import { fetchGameId } from "../store/gamesActions";
+import { fetchGameId } from "../store/currentGameStore/gamesActions";
 export default function StartGameForm({ placeholder, label, name }) {
   const dispatch = useDispatch();
   function submitHandler(e) {

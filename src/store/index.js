@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import gameData from "./gameData";
-import newGameData from "./newGameData";
-import newGameUi from "./newGameUi";
+import gameData from "./currentGameStore/gameData";
+
+import newGameData from "./newGameStore/newGameData";
+
 const store = configureStore({
-  reducer: { game: gameData, newGame: newGameData, newGameUi: newGameUi },
+  reducer: { game: gameData, newGame: newGameData },
 });
 
 export default store;

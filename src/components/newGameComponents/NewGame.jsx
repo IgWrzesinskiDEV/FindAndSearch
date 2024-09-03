@@ -6,8 +6,12 @@ import { useRef } from "react";
 import { FaPlus } from "react-icons/fa6";
 import { FaRegCircleXmark } from "react-icons/fa6";
 import { useSelector } from "react-redux";
+import { postNewGame } from "../../store/newGameStore/newGamesActions";
+import { useDispatch } from "react-redux";
 import NewQuestion from "./NewQuestion";
 export default function NewGame() {
+  const dispatch = useDispatch();
+  const gameIdRef = useRef();
   const newGameQuestions = useSelector(
     (state) => state.newGame.newGameQuestions
   );
@@ -20,8 +24,15 @@ export default function NewGame() {
     modalRef.current.close();
   }
   console.log(newGameQuestions);
-  function addGameHanlder() {
-    confirmModalRef.current.open();
+
+  function addGameToDbHandler() {
+    const game = {
+      id: gameIdRef.current.value,
+      questions: newGameQuestions,
+    };
+    console.log(game);
+    dispatch(postNewGame(game));
+    closeModalHandler(confirmModalRef);
   }
 
   const thClass = "border-2 p-4 border-primary";
@@ -45,10 +56,11 @@ export default function NewGame() {
             Are you sure you want to create a new game with{" "}
             {newGameQuestions.length} questions?
           </h2>
-          <Button>Yes</Button>
+          <Button onClick={addGameToDbHandler}>Yes</Button>
           <Button
             className="bg-red-500 border-none"
             onClick={() => closeModalHandler(confirmModalRef)}
+            type="button"
           >
             No
           </Button>
@@ -61,6 +73,7 @@ export default function NewGame() {
             label="Choose a id for your game!"
             placeholder="game ID"
             name="gameId"
+            ref={gameIdRef}
             className="w-1/2"
           />
           {newGameQuestions.length > 0 && (
