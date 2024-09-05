@@ -68,11 +68,11 @@ export default function QuestionScreen() {
         <>
           <p className="mt-6 text-2xl font-bold">Correct Answer!</p>
           <p className="mt-6 text-xl font-bold">Go to next location!</p>
-          <Map
+          {/* <Map
             lat={currentQuestion.latitude}
             lng={currentQuestion.longitude}
             radius={currentQuestion.radius}
-          />
+          /> */}
         </>
       )}
       {!iscorrectAnswer && iscorrectAnswer !== null && (

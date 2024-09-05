@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import isEmpty from "../../validate";
 import { newGameDataActions } from "../../store/newGameStore/newGameData";
+import DrawingMap from "./DrawingMap";
 export default function AddNewQuestion({
   onCloseModal,
   title,
@@ -124,6 +125,8 @@ export default function AddNewQuestion({
 
         <Button>{editedQuestion ? "Edit " : "Submit "}</Button>
       </form>
+      <Button onClick={}>Reset map</Button>
+      <DrawingMap />
     </div>
   );
 }
