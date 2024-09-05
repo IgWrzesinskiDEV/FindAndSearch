@@ -6,7 +6,7 @@ export default function Button({ children, className, ...props }) {
     <button
       {...props}
       className={twMerge(
-        " border-2 border-primary outline-none  text-white font-bold py-2 px-4 rounded flex items-center disabled:opacity-50 justify-center gap-2",
+        " border-2 border-primary outline-none leading-tight text-white font-bold py-2 px-4 rounded flex items-center disabled:opacity-50 justify-center gap-2 transition-transform duration-200 hover:scale-105 disabled:scale-100",
         className
       )}
     >

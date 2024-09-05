@@ -6,7 +6,7 @@ import { FaRegCircleXmark } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import { postNewGame } from "../../store/newGameStore/newGamesActions";
 import { useDispatch } from "react-redux";
-
+import { newMapDataActions } from "../../store/newMapStore/newMapData";
 import AddNewGameSection from "./AddNewGameSection";
 
 export default function NewGame() {
@@ -17,13 +17,14 @@ export default function NewGame() {
   );
   const newQuestionsModalRef = useRef();
   const confirmModalRef = useRef();
+
   function openModalHandler(modalRef) {
     modalRef.current.open();
-
-    console.log("das");
+    dispatch(newMapDataActions.toogleModal());
   }
   function closeModalHandler(modalRef) {
     modalRef.current.close();
+    dispatch(newMapDataActions.toogleModal());
   }
   console.log(newGameQuestions);
 

@@ -1,11 +1,25 @@
-import { useCallback, useState } from "react";
+import {
+  useCallback,
+  useState,
+  useEffect,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   GoogleMap,
   useLoadScript,
+  Autocomplete,
   DrawingManager,
 } from "@react-google-maps/api";
+import Button from "../UI/Button";
+import { GiBroom } from "react-icons/gi";
+import { newMapDataActions } from "../../store/newMapStore/newMapData";
+import { toast } from "react-toastify";
+import { TbMapPinSearch } from "react-icons/tb";
 
-const libraries = ["drawing"];
+const libraries = ["drawing", "places"];
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const mapContainerStyle = {
   width: "80%",
@@ -22,30 +36,64 @@ const options = {
   center,
 };
 
-const DrawingMap = () => {
+const DrawingMap = forwardRef(function DrawingMap({}, ref) {
+  const isModalOpen = useSelector((state) => state.newMapData.isModalOpen);
+  const polygonsCords = useSelector((state) => state.newMapData.polygonsCords);
+  const [polygonsMvc, setPolygonsMvc] = useState([]);
+  const dispatch = useDispatch();
+  const [map, setMap] = useState(null);
+  const [autocomplete, setAutocomplete] = useState(null);
+  const inputRef = useRef(null);
+
+  const clearPolygons = useCallback(() => {
+    polygonsMvc.forEach((polygon) => polygon.setMap(null));
+
+    dispatch(newMapDataActions.resetPolygons(polygonsCords));
+  }, [polygonsCords, polygonsMvc, dispatch]);
+
+  useEffect(() => {
+    if (!isModalOpen) {
+      clearPolygons();
+    }
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isModalOpen]);
+  useImperativeHandle(ref, () => ({
+    getMapInfo,
+  }));
+
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: GOOGLE_MAPS_API_KEY, // Replace with your API key
+    googleMapsApiKey: GOOGLE_MAPS_API_KEY,
     libraries,
   });
-  const [map, setMap] = useState(null);
-  const [polygons, setPolygons] = useState([]);
+
+  function clearDrawingsClickHandler() {
+    clearPolygons();
+    toast.info("Drawings cleared", {
+      icon: () => <GiBroom className="text-5xl text-yellow-200 " />,
+    });
+  }
+
   const onMapLoad = useCallback((mapInstance) => {
     setMap(mapInstance);
   }, []);
 
   if (loadError) return <div>Error loading maps</div>;
   if (!isLoaded) return <div>Loading Maps...</div>;
-
   const handlePolygonComplete = (polygon) => {
-    setPolygons((prevPolygons) => [...prevPolygons, polygon]);
-    console.log(polygon.getPath().getArray());
+    setPolygonsMvc((prev) => [...prev, polygon]);
+    dispatch(
+      newMapDataActions.pushPolygon(
+        polygon
+          .getPath()
+          .getArray()
+          .map((point) => point.toJSON())
+      )
+    );
   };
-
-  const clearPolygons = () => {
-    polygons.forEach((polygon) => polygon.setMap(null));
-    setPolygons([]);
-  };
-
+  console.log(polygonsCords);
   const drawingOptions = {
     drawingControl: true,
     drawingControlOptions: {
@@ -65,25 +113,67 @@ const DrawingMap = () => {
     },
     polygonOptions: {
       fillColor: "#F87171",
-      fillOpacity: 0.5,
+      fillOpacity: 0.4,
       strokeWeight: 2,
       clickable: false,
-      editable: true,
+      editable: false,
       zIndex: 1,
     },
   };
+
+  function getMapInfo() {
+    const mapInfo = {
+      centerCords: map.getCenter().toJSON(),
+      zoom: map.getZoom(),
+    };
+    console.log(mapInfo);
+
+    return mapInfo;
+  }
+
+  const handlePlaceChanged = () => {
+    const { geometry } = autocomplete.getPlace();
+    const bounds = new window.google.maps.LatLngBounds();
+    if (geometry.viewport) {
+      bounds.union(geometry.viewport);
+    } else {
+      bounds.extend(geometry.location);
+    }
+    map.fitBounds(bounds);
+  };
+
   return (
     <>
-      <button onClick={clearPolygons}> clear drawings</button>
+      <Button onClick={getMapInfo} type="button" className="">
+        Get map info
+      </Button>
+
+      <label
+        htmlFor="place"
+        className="flex items-center justify-center gap-2 leading-tight text-center "
+      >
+        <TbMapPinSearch className="text-3xl text-primaryLighter" />
+        Search for place!
+      </label>
+      <Autocomplete
+        onLoad={setAutocomplete}
+        onPlaceChanged={handlePlaceChanged}
+        className="z-50 flex items-center justify-center w-3/4 gap-2"
+      >
+        <input
+          ref={inputRef}
+          type="text"
+          name="place"
+          placeholder="Enter a location"
+          className="w-3/4 p-2 outline outline-primaryDarker outline-2 focus:outline-primary"
+        />
+      </Autocomplete>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={options.zoom}
         center={options.center}
         options={{
           streetViewControl: false,
-        }}
-        onUnmount={() => {
-          console.log("unmount");
         }}
         onLoad={onMapLoad}
       >
@@ -95,18 +185,11 @@ const DrawingMap = () => {
           />
         )}
       </GoogleMap>
-      {/* <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY} libraries={libraries}>
-        <GoogleMap
-          mapContainerStyle={mapContainerStyle}
-          zoom={options.zoom}
-          center={options.center}
-          options={{
-            streetViewControl: false,
-          }}
-        ></GoogleMap>
-      </LoadScript> */}
+      <Button onClick={clearDrawingsClickHandler} type="button" className="">
+        <GiBroom className="text-xl text-yellow-200 " /> Clear drawings
+      </Button>
     </>
   );
-};
+});
 
 export default DrawingMap;
