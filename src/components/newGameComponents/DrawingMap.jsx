@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   useCallback,
   useState,
@@ -12,6 +13,7 @@ import {
   useLoadScript,
   Autocomplete,
   DrawingManager,
+  Polygon,
 } from "@react-google-maps/api";
 import Button from "../UI/Button";
 import { GiBroom } from "react-icons/gi";
@@ -26,17 +28,20 @@ const mapContainerStyle = {
   height: "50vh",
 };
 
-const center = {
+let center = {
   lat: 52.0693,
   lng: 19.4803,
 };
-
-const options = {
+// let center = {
+//   lat: 37.772,
+//   lng: -122.214,
+// };
+let options = {
   zoom: 8,
   center,
 };
 
-const DrawingMap = forwardRef(function DrawingMap({}, ref) {
+const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
   const isModalOpen = useSelector((state) => state.newMapData.isModalOpen);
   const polygonsCords = useSelector((state) => state.newMapData.polygonsCords);
   const [polygonsMvc, setPolygonsMvc] = useState([]);
@@ -45,11 +50,26 @@ const DrawingMap = forwardRef(function DrawingMap({}, ref) {
   const [autocomplete, setAutocomplete] = useState(null);
   const inputRef = useRef(null);
 
+  useEffect(() => {
+    if (mapDataFromEdit) {
+      center = {
+        lat: mapDataFromEdit.mapInfo.centerCords.lat,
+        lng: mapDataFromEdit.mapInfo.centerCords.lng,
+      };
+      options = {
+        zoom: mapDataFromEdit.mapInfo.zoom,
+        center,
+      };
+
+      dispatch(newMapDataActions.pushPolygon(mapDataFromEdit.polygonsCords));
+      console.log(polygonsCords);
+    }
+  }, [mapDataFromEdit, dispatch]);
   const clearPolygons = useCallback(() => {
     polygonsMvc.forEach((polygon) => polygon.setMap(null));
 
-    dispatch(newMapDataActions.resetPolygons(polygonsCords));
-  }, [polygonsCords, polygonsMvc, dispatch]);
+    dispatch(newMapDataActions.resetPolygons());
+  }, [polygonsMvc, dispatch]);
 
   useEffect(() => {
     if (!isModalOpen) {
@@ -93,40 +113,32 @@ const DrawingMap = forwardRef(function DrawingMap({}, ref) {
       )
     );
   };
-  console.log(polygonsCords);
+  // console.log(polygonsCords);
+
   const drawingOptions = {
     drawingControl: true,
     drawingControlOptions: {
       position: window.google.maps.ControlPosition.TOP_CENTER,
       drawingModes: [window.google.maps.drawing.OverlayType.POLYGON],
     },
-    markerOptions: {
-      icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
-    },
-    circleOptions: {
-      fillColor: "#ffff00",
-      fillOpacity: 1,
-      strokeWeight: 5,
-      clickable: false,
-      editable: true,
-      zIndex: 1,
-    },
+
     polygonOptions: {
       fillColor: "#F87171",
+
       fillOpacity: 0.4,
       strokeWeight: 2,
       clickable: false,
       editable: false,
-      zIndex: 1,
+      zIndex: 5,
     },
   };
+  console.log(polygonsCords);
 
   function getMapInfo() {
     const mapInfo = {
       centerCords: map.getCenter().toJSON(),
       zoom: map.getZoom(),
     };
-    console.log(mapInfo);
 
     return mapInfo;
   }
@@ -178,11 +190,26 @@ const DrawingMap = forwardRef(function DrawingMap({}, ref) {
         onLoad={onMapLoad}
       >
         {map && (
-          <DrawingManager
-            options={drawingOptions}
-            onLoad={(drawingManager) => drawingManager.setMap(map)}
-            onPolygonComplete={handlePolygonComplete}
-          />
+          <>
+            <DrawingManager
+              options={drawingOptions}
+              onLoad={(drawingManager) => drawingManager.setMap(map)}
+              onPolygonComplete={handlePolygonComplete}
+            />
+            {mapDataFromEdit && (
+              <Polygon
+                paths={mapDataFromEdit.polygonsCords}
+                options={{
+                  fillColor: "#F87171",
+                  fillOpacity: 0.4,
+                  strokeWeight: 2,
+                  clickable: false,
+                  editable: false,
+                  zIndex: 1,
+                }}
+              />
+            )}
+          </>
         )}
       </GoogleMap>
       <Button onClick={clearDrawingsClickHandler} type="button" className="">

@@ -5,15 +5,14 @@ export default function Table() {
     (state) => state.newGame.newGameQuestions
   );
   const thClass = "border-2 p-4 border-primary";
+  // console.log(newGameQuestions);
+
   return newGameQuestions.length > 0 ? (
     <table className="border-2 table-auto border-primary ">
       <thead>
         <tr>
           <th className={thClass}>Question</th>
           <th className={thClass}>Answer</th>
-          <th className={thClass}>Latitude</th>
-          <th className={thClass}>Longitude</th>
-          <th className={thClass}>Radius</th>
         </tr>
       </thead>
       <tbody>

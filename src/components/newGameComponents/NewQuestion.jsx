@@ -59,11 +59,8 @@ export default function NewQuestion({ question }) {
         )}
         onClick={openPopOver}
       >
-        <td className={tdClass}>{question.questionText}</td>
-        <td className={tdClass}>{question.answer}</td>
-        <td className={tdClass}>{question.latitude}</td>
-        <td className={tdClass}>{question.longitude}</td>
-        <td className={tdClass}>{question.radius}</td>
+        <td className={tdClass}>{question.questionData.questionText}</td>
+        <td className={tdClass}>{question.questionData.answer}</td>
       </tr>
       <TablePopOver ref={popRef} setIsSelected={setIsSelected}>
         <div className="flex flex-col justify-center h-full border-2 border-t-0 w-fit border-primaryDarker bg-bgcColor text-stone-200 p-y-2 ">

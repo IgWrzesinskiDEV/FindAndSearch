@@ -1,21 +1,28 @@
 /* eslint-disable react/prop-types */
 import Button from "../UI/Button";
 import Input from "../UI/Input";
-import { useDispatch } from "react-redux";
-import { useState, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useRef, useEffect } from "react";
 import isEmpty from "../../validate";
 import { newGameDataActions } from "../../store/newGameStore/newGameData";
+
 import DrawingMap from "./DrawingMap";
+
 export default function AddNewQuestion({
   onCloseModal,
   title,
   editedQuestion = null,
 }) {
+  const polygonsCords = useSelector((state) => state.newMapData.polygonsCords);
+  const newGameQuestions = useSelector(
+    (state) => state.newGame.newGameQuestions
+  );
   const dispatch = useDispatch();
   const mapRef = useRef();
   const [error, setError] = useState({
     questionText: false,
     answer: false,
+    polygonsCords: false,
   });
 
   function onBlure(e) {
@@ -29,19 +36,33 @@ export default function AddNewQuestion({
   function handleSubmit(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const question = Object.fromEntries(formData.entries());
+    const qAndA = Object.fromEntries(formData.entries());
 
-    for (const key in question) {
-      if (isEmpty(question[key])) {
+    for (const key in qAndA) {
+      if (isEmpty(qAndA[key])) {
         setError((prev) => ({ ...prev, [key]: true }));
       }
     }
-    if (isEmpty(question.questionText) || isEmpty(question.answer)) {
+    if (polygonsCords.length === 0) {
+      setError((prev) => ({ ...prev, polygonsCords: true }));
+    }
+    if (
+      isEmpty(qAndA.questionText) ||
+      isEmpty(qAndA.answer) ||
+      polygonsCords.length === 0
+    ) {
       return;
     }
-    console.log(mapRef.current.getMapInfo());
+    // console.log(mapRef.current.getMapInfo());
 
     e.target.reset();
+    const question = {
+      questionData: { questionText: qAndA.questionText, answer: qAndA.answer },
+      mapData: {
+        mapInfo: mapRef.current.getMapInfo(),
+        polygonsCords: polygonsCords,
+      },
+    };
     if (editedQuestion) {
       question.id = editedQuestion.id;
       dispatch(newGameDataActions.editNewGameQuestion(question));
@@ -54,6 +75,12 @@ export default function AddNewQuestion({
   }
 
   //const { questionText, answer, latitude, longitude, radius } = editedQuestion;
+  useEffect(() => {
+    if (polygonsCords.length > 0) {
+      setError((prev) => ({ ...prev, polygonsCords: false }));
+    }
+  }, [polygonsCords]);
+  //console.log(newGameQuestions);
 
   return (
     <div className="flex flex-col items-center">
@@ -69,7 +96,9 @@ export default function AddNewQuestion({
           label="Question"
           name="questionText"
           error={error.questionText}
-          editedValue={editedQuestion ? editedQuestion.questionText : ""}
+          editedValue={
+            editedQuestion ? editedQuestion.questionData.questionText : ""
+          }
           onBlur={onBlure}
         />
         <Input
@@ -77,11 +106,16 @@ export default function AddNewQuestion({
           label="Answer"
           name="answer"
           error={error.answer}
-          editedValue={editedQuestion ? editedQuestion.answer : ""}
+          editedValue={editedQuestion ? editedQuestion.questionData.answer : ""}
           onBlur={onBlure}
         />
-        <DrawingMap ref={mapRef} />
-
+        <DrawingMap
+          ref={mapRef}
+          mapDataFromEdit={editedQuestion ? editedQuestion.mapData : ""}
+        />
+        {error.polygonsCords && (
+          <p className="text-red-500">Required at least one area selected</p>
+        )}
         <Button>{editedQuestion ? "Edit " : "Submit "}</Button>
       </form>
     </div>
