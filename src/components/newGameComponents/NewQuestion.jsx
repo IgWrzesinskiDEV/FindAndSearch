@@ -8,6 +8,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import { FaRegCircleXmark } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import { newGameDataActions } from "../../store/newGameStore/newGameData";
+import { newMapDataActions } from "../../store/newMapStore/newMapData";
 import { twMerge } from "tailwind-merge";
 import Modal from "../UI/Modal";
 import AddNewQuestion from "./AddNewQuestion";
@@ -25,6 +26,10 @@ export default function NewQuestion({ question }) {
     dispatch(newGameDataActions.deleteNewGameQuestion(id));
   }
   function editQuestionHandler() {
+    console.log(question);
+    dispatch(
+      newMapDataActions.overWritePolygons(question.mapData.polygonsCords)
+    );
     openModalHandler();
     popRef.current.closePop();
   }

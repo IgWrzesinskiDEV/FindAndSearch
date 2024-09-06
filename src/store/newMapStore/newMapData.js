@@ -11,12 +11,19 @@ const newMapData = createSlice({
   reducers: {
     resetPolygons(state) {
       state.polygonsCords = [];
+      console.log(state.polygonsCords, "in reset");
     },
     pushPolygon(state, action) {
       state.polygonsCords.push(action.payload);
+      console.log(state.polygonsCords, "in push");
     },
     toogleModal(state) {
       state.isModalOpen = !state.isModalOpen;
+      console.log(state.polygonsCords, "in modal");
+    },
+    overWritePolygons(state, action) {
+      state.polygonsCords = action.payload;
+      console.log(state.polygonsCords, "in overwrite");
     },
   },
 });

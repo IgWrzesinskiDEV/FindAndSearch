@@ -51,7 +51,9 @@ const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    if (mapDataFromEdit) {
+    console.log(mapDataFromEdit);
+
+    if (mapDataFromEdit && isModalOpen) {
       center = {
         lat: mapDataFromEdit.mapInfo.centerCords.lat,
         lng: mapDataFromEdit.mapInfo.centerCords.lng,
@@ -60,16 +62,26 @@ const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
         zoom: mapDataFromEdit.mapInfo.zoom,
         center,
       };
+      console.log(
+        mapDataFromEdit.polygonsCords,
+        "mapDataFromEdit.polygonsCords"
+      );
+      console.log(polygonsCords, " polygonsCords before");
 
-      dispatch(newMapDataActions.pushPolygon(mapDataFromEdit.polygonsCords));
-      console.log(polygonsCords);
+      // dispatch(
+      //   newMapDataActions.overWritePolygons(mapDataFromEdit.polygonsCords) //tu jest problem
+      // );
+      console.log(polygonsCords, "polygonsCords after");
     }
-  }, [mapDataFromEdit, dispatch]);
+  }, [mapDataFromEdit, dispatch, isModalOpen, polygonsCords]);
   const clearPolygons = useCallback(() => {
-    polygonsMvc.forEach((polygon) => polygon.setMap(null));
+    if (mapDataFromEdit) {
+      return;
+    }
 
+    polygonsMvc.forEach((polygon) => polygon.setMap(null));
     dispatch(newMapDataActions.resetPolygons());
-  }, [polygonsMvc, dispatch]);
+  }, [polygonsMvc, dispatch, mapDataFromEdit]);
 
   useEffect(() => {
     if (!isModalOpen) {

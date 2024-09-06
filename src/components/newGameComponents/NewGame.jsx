@@ -26,7 +26,6 @@ export default function NewGame() {
     modalRef.current.close();
     dispatch(newMapDataActions.toogleModal());
   }
-  console.log(newGameQuestions);
 
   async function addGameToDbHandler() {
     const game = {
@@ -62,6 +61,7 @@ export default function NewGame() {
         <AddNewQuestion
           onCloseModal={() => closeModalHandler(newQuestionsModalRef)}
           title="Add New Question"
+          editedQuestion={null}
         />
       </Modal>
       <Modal ref={confirmModalRef}>

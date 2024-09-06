@@ -7,11 +7,12 @@ import isEmpty from "../../validate";
 import { newGameDataActions } from "../../store/newGameStore/newGameData";
 
 import DrawingMap from "./DrawingMap";
+import { newMapDataActions } from "../../store/newMapStore/newMapData";
 
 export default function AddNewQuestion({
   onCloseModal,
   title,
-  editedQuestion = null,
+  editedQuestion,
 }) {
   const polygonsCords = useSelector((state) => state.newMapData.polygonsCords);
   const newGameQuestions = useSelector(
@@ -70,6 +71,12 @@ export default function AddNewQuestion({
       question.id = Math.random();
       dispatch(newGameDataActions.pushNewGameQuestion(question));
     }
+    //console.log(polygonsCords, "polygonsCords before");
+
+    dispatch(newMapDataActions.resetPolygons());
+
+    // console.log(polygonsCords, "polygonsCords after");
+    console.log("closing modal---------------");
 
     onCloseModal();
   }
@@ -111,7 +118,9 @@ export default function AddNewQuestion({
         />
         <DrawingMap
           ref={mapRef}
-          mapDataFromEdit={editedQuestion ? editedQuestion.mapData : ""}
+          mapDataFromEdit={
+            editedQuestion ? editedQuestion.mapData : editedQuestion
+          }
         />
         {error.polygonsCords && (
           <p className="text-red-500">Required at least one area selected</p>
