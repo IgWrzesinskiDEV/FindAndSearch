@@ -50,6 +50,7 @@ const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
   const [autocomplete, setAutocomplete] = useState(null);
   const inputRef = useRef(null);
 
+  const [path, setPath] = useState(mapDataFromEdit?.polygonsCords || []);
   useEffect(() => {
     console.log(mapDataFromEdit);
 
@@ -62,26 +63,31 @@ const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
         zoom: mapDataFromEdit.mapInfo.zoom,
         center,
       };
-      console.log(
-        mapDataFromEdit.polygonsCords,
-        "mapDataFromEdit.polygonsCords"
-      );
-      console.log(polygonsCords, " polygonsCords before");
-
-      console.log(polygonsCords, "polygonsCords after");
+      setPath(mapDataFromEdit.polygonsCords);
     }
   }, [mapDataFromEdit, dispatch, isModalOpen, polygonsCords]);
   const clearPolygons = useCallback(() => {
-    // if (mapDataFromEdit) {
-    //   return;
-    // }
+    if (mapDataFromEdit) {
+      console.log(
+        "mapDataFromEdit.polygonsCords",
+        mapDataFromEdit.polygonsCords
+      );
+    }
     console.log("clearing polygons");
-    console.log(polygonsMvc, "polygonsMvc before clearing");
+    //console.log(polygonsMvc, "polygonsMvc before clearing");
 
     polygonsMvc.forEach((polygon) => polygon.setMap(null));
+    setPolygonsMvc([]);
     dispatch(newMapDataActions.resetPolygons());
     console.log(polygonsCords, "polygonsCords after clearing");
-  }, [polygonsMvc, dispatch, mapDataFromEdit]);
+    console.log(polygonsMvc, "polygonsMvc after clearing");
+    if (mapDataFromEdit) {
+      console.log(
+        mapDataFromEdit.polygonsCords,
+        "mapDataFromEdit.cords after clearing"
+      );
+    }
+  }, [dispatch, polygonsCords, polygonsMvc, mapDataFromEdit]);
 
   useEffect(() => {
     if (!isModalOpen || mapDataFromEdit) {
@@ -103,6 +109,7 @@ const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
 
   function clearDrawingsClickHandler() {
     clearPolygons();
+    setPath([]);
     toast.info("Drawings cleared", {
       icon: () => <GiBroom className="text-5xl text-yellow-200 " />,
     });
@@ -136,7 +143,6 @@ const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
 
     polygonOptions: {
       fillColor: "#F87171",
-
       fillOpacity: 0.4,
       strokeWeight: 2,
       clickable: false,
@@ -210,7 +216,7 @@ const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
             />
             {mapDataFromEdit && (
               <Polygon
-                paths={mapDataFromEdit.polygonsCords}
+                paths={path}
                 options={{
                   fillColor: "#F87171",
                   fillOpacity: 0.4,
