@@ -76,7 +76,6 @@ export default function AddNewQuestion({
     dispatch(newMapDataActions.resetPolygons());
 
     // console.log(polygonsCords, "polygonsCords after");
-    console.log("closing modal---------------");
 
     onCloseModal();
   }
@@ -87,7 +86,7 @@ export default function AddNewQuestion({
       setError((prev) => ({ ...prev, polygonsCords: false }));
     }
   }, [polygonsCords]);
-  //console.log(newGameQuestions);
+  console.log(newGameQuestions);
 
   return (
     <div className="flex flex-col items-center">

@@ -84,6 +84,7 @@ export default function NewGame() {
         openModalHandler={openModalHandler}
         newQuestionsModalRef={newQuestionsModalRef}
         confirmModalRef={confirmModalRef}
+        ref={gameIdRef}
       />
     </>
   );

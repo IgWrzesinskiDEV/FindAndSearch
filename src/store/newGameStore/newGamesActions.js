@@ -11,11 +11,22 @@ export const postNewGame = (game) => {
       const gameDoc = await getDoc(gameRef);
 
       if (!gameDoc.exists()) {
+        console.log(game);
+
         const questions = await Promise.all(
           game.questions.map(async (question) => {
             return {
               ...question,
-              answer: await hashCorrectAnswer(question.answer.toLowerCase()),
+              questionData: {
+                ...question.questionData,
+                answer: await hashCorrectAnswer(
+                  question.questionData.answer.toLowerCase()
+                ),
+              },
+              mapData: {
+                ...question.mapData,
+                polygonsCords: { ...question.mapData.polygonsCords },
+              },
             };
           })
         );

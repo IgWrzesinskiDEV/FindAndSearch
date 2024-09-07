@@ -2,19 +2,18 @@
 import Input from "../UI/Input";
 import Button from "../UI/Button";
 import Table from "./Table";
-import { useRef } from "react";
+import { forwardRef, useRef } from "react";
 import { useSelector } from "react-redux";
 import { FaPlus } from "react-icons/fa6";
 import Section from "../UI/Section";
-export default function AddNewGameSection({
-  openModalHandler,
-  newQuestionsModalRef,
-  confirmModalRef,
-}) {
+const AddNewGameSection = forwardRef(function AddNewGameSection(
+  { openModalHandler, newQuestionsModalRef, confirmModalRef },
+  ref
+) {
   const newGameQuestions = useSelector(
     (state) => state.newGame.newGameQuestions
   );
-  const gameIdRef = useRef();
+
   return (
     <Section className="w-full">
       <h1 className="my-5 text-2xl font-bold text-center uppercase text-sky-400">
@@ -26,7 +25,7 @@ export default function AddNewGameSection({
           labelClassName="text-lg pb-4 text-center lg:text-3xl"
           placeholder="game ID"
           name="gameId"
-          ref={gameIdRef}
+          ref={ref}
           className="w-1/5"
         />
         <Table />
@@ -49,4 +48,5 @@ export default function AddNewGameSection({
       </form>
     </Section>
   );
-}
+});
+export default AddNewGameSection;

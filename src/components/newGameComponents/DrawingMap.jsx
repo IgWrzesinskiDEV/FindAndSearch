@@ -52,7 +52,7 @@ const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
 
   const [path, setPath] = useState(mapDataFromEdit?.polygonsCords || []);
   useEffect(() => {
-    console.log(mapDataFromEdit);
+    //console.log(mapDataFromEdit);
 
     if (mapDataFromEdit && isModalOpen) {
       center = {
@@ -67,27 +67,12 @@ const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
     }
   }, [mapDataFromEdit, dispatch, isModalOpen, polygonsCords]);
   const clearPolygons = useCallback(() => {
-    if (mapDataFromEdit) {
-      console.log(
-        "mapDataFromEdit.polygonsCords",
-        mapDataFromEdit.polygonsCords
-      );
-    }
-    console.log("clearing polygons");
-    //console.log(polygonsMvc, "polygonsMvc before clearing");
-
     polygonsMvc.forEach((polygon) => polygon.setMap(null));
     setPolygonsMvc([]);
     dispatch(newMapDataActions.resetPolygons());
-    console.log(polygonsCords, "polygonsCords after clearing");
-    console.log(polygonsMvc, "polygonsMvc after clearing");
-    if (mapDataFromEdit) {
-      console.log(
-        mapDataFromEdit.polygonsCords,
-        "mapDataFromEdit.cords after clearing"
-      );
-    }
-  }, [dispatch, polygonsCords, polygonsMvc, mapDataFromEdit]);
+    //console.log(polygonsCords, "polygonsCords after clearing");
+    //console.log(polygonsMvc, "polygonsMvc after clearing");
+  }, [dispatch, polygonsMvc]);
 
   useEffect(() => {
     if (!isModalOpen || mapDataFromEdit) {
@@ -150,7 +135,7 @@ const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
       zIndex: 1,
     },
   };
-  console.log(polygonsCords);
+  //console.log(polygonsCords);
 
   function getMapInfo() {
     const mapInfo = {
