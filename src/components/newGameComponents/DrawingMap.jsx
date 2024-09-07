@@ -68,23 +68,23 @@ const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
       );
       console.log(polygonsCords, " polygonsCords before");
 
-      // dispatch(
-      //   newMapDataActions.overWritePolygons(mapDataFromEdit.polygonsCords) //tu jest problem
-      // );
       console.log(polygonsCords, "polygonsCords after");
     }
   }, [mapDataFromEdit, dispatch, isModalOpen, polygonsCords]);
   const clearPolygons = useCallback(() => {
-    if (mapDataFromEdit) {
-      return;
-    }
+    // if (mapDataFromEdit) {
+    //   return;
+    // }
+    console.log("clearing polygons");
+    console.log(polygonsMvc, "polygonsMvc before clearing");
 
     polygonsMvc.forEach((polygon) => polygon.setMap(null));
     dispatch(newMapDataActions.resetPolygons());
+    console.log(polygonsCords, "polygonsCords after clearing");
   }, [polygonsMvc, dispatch, mapDataFromEdit]);
 
   useEffect(() => {
-    if (!isModalOpen) {
+    if (!isModalOpen || mapDataFromEdit) {
       clearPolygons();
     }
     if (inputRef.current) {
@@ -141,7 +141,7 @@ const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
       strokeWeight: 2,
       clickable: false,
       editable: false,
-      zIndex: 5,
+      zIndex: 1,
     },
   };
   console.log(polygonsCords);

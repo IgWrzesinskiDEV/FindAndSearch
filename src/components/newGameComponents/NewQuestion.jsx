@@ -48,9 +48,14 @@ export default function NewQuestion({ question }) {
   return (
     <>
       <Modal ref={modalRef}>
-        <button className="absolute top-5 right-5" onClick={closeModalHandler}>
-          <FaRegCircleXmark className="text-3xl text-red-500" />
-        </button>
+        {question ? null : (
+          <button
+            className="absolute top-5 right-5"
+            onClick={closeModalHandler}
+          >
+            <FaRegCircleXmark className="text-3xl text-red-500" />
+          </button>
+        )}
         <AddNewQuestion
           onCloseModal={closeModalHandler}
           title="Edit Question"
