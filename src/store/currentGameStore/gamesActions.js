@@ -6,7 +6,9 @@ import { doc, getDoc } from "firebase/firestore";
 export const fetchGameId = (gameId) => {
   return async (dispatch) => {
     try {
-      const gameRef = doc(db, "games", gameId);
+      const gameRef = doc(db, "games", gameId, "questions");
+      console.log(gameRef);
+
       const gameDoc = await getDoc(gameRef);
 
       if (gameDoc.exists()) {

@@ -15,14 +15,14 @@ export default function QuestionScreen() {
   );
   const dispatch = useDispatch();
   //const crrQuestion = questionsDispleyed[currentQuestionIndex];
-  console.log(questionsDispleyed, "questionsDispleyed");
-  console.log(currentGameQuestions, "currentGameQuestions");
-  console.log(currentQuestionIndex, "currentQuestionIndex");
+  //console.log(questionsDispleyed, "questionsDispleyed");
+  //console.log(currentGameQuestions, "currentGameQuestions");
+  //console.log(currentQuestionIndex, "currentQuestionIndex");
 
   const currentQuestion = questionsDispleyed[currentQuestionIndex].question;
   const iscorrectAnswer =
     questionsDispleyed[currentQuestionIndex].correctAnswer;
-  console.log(currentQuestion, "currentQuestion");
+  //console.log(currentQuestion, "currentQuestion");
 
   function nextQuestionHandler() {
     if (currentQuestionIndex === questionsDispleyed.length - 1) {

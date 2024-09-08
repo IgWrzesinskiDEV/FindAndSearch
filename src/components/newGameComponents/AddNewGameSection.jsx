@@ -2,7 +2,7 @@
 import Input from "../UI/Input";
 import Button from "../UI/Button";
 import Table from "./Table";
-import { forwardRef, useRef } from "react";
+import { forwardRef } from "react";
 import { useSelector } from "react-redux";
 import { FaPlus } from "react-icons/fa6";
 import Section from "../UI/Section";

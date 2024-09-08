@@ -16,14 +16,13 @@ const gameData = createSlice({
       state.currentGame = action.payload;
     },
     setCurrentGameQuestions: (state) => {
-      const questions = state.currentGame.questions.sort(
-        () => 0.5 - Math.random()
-      );
+      const questions = state.currentGame.sort(() => 0.5 - Math.random());
+      console.log(questions);
 
       state.currentGameQuestions = questions;
       //state.currentQuestion.question = state.currentGameQuestions[0];
       state.questionsDispleyed.push({
-        question: questions[0],
+        question: questions[0].questionText,
         correctAnswer: null,
         questionIndex: 0,
       });
