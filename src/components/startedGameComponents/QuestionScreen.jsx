@@ -3,7 +3,11 @@ import Map from "./Map";
 import { useSelector, useDispatch } from "react-redux";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import { gameDataActions } from "../../store/currentGameStore/gameData";
+import { fetchMapData } from "../../store/currentGameStore/gamesActions";
+import { useEffect } from "react";
 export default function QuestionScreen() {
+  const currentGameId = useSelector((state) => state.game.currentGame.gameId);
+
   const questionsDispleyed = useSelector(
     (state) => state.game.questionsDispleyed
   );
@@ -13,6 +17,7 @@ export default function QuestionScreen() {
   const currentQuestionIndex = useSelector(
     (state) => state.game.currentQuestionIndex
   );
+  const mapData = useSelector((state) => state.game.currentMap);
   const dispatch = useDispatch();
   //const crrQuestion = questionsDispleyed[currentQuestionIndex];
   //console.log(questionsDispleyed, "questionsDispleyed");
@@ -20,10 +25,13 @@ export default function QuestionScreen() {
   //console.log(currentQuestionIndex, "currentQuestionIndex");
 
   const currentQuestion = questionsDispleyed[currentQuestionIndex].question;
-  const iscorrectAnswer =
+  const isCorrectAnswer =
     questionsDispleyed[currentQuestionIndex].correctAnswer;
-  //console.log(currentQuestion, "currentQuestion");
-
+  useEffect(() => {
+    if (isCorrectAnswer) {
+      dispatch(fetchMapData(currentQuestion.id, currentGameId));
+    }
+  }, [isCorrectAnswer, currentQuestion.id, currentGameId, dispatch]);
   function nextQuestionHandler() {
     if (currentQuestionIndex === questionsDispleyed.length - 1) {
       dispatch(
@@ -64,18 +72,14 @@ export default function QuestionScreen() {
         label={currentQuestion.questionText}
         name="gameQuestion"
       />
-      {iscorrectAnswer && (
+      {isCorrectAnswer && mapData ? (
         <>
           <p className="mt-6 text-2xl font-bold">Correct Answer!</p>
           <p className="mt-6 text-xl font-bold">Go to next location!</p>
-          {/* <Map
-            lat={currentQuestion.latitude}
-            lng={currentQuestion.longitude}
-            radius={currentQuestion.radius}
-          /> */}
+          <Map mapData={mapData} />
         </>
-      )}
-      {!iscorrectAnswer && iscorrectAnswer !== null && (
+      ) : null}
+      {!isCorrectAnswer && isCorrectAnswer !== null && (
         <p className="mt-6 text-2xl font-bold">Incorrect Answer!</p>
       )}
       <p className="flex justify-around w-full my-6">
@@ -88,7 +92,7 @@ export default function QuestionScreen() {
             Previous question
           </button>
         )}
-        {iscorrectAnswer &&
+        {isCorrectAnswer &&
           currentGameQuestions.length - 1 !== currentQuestionIndex && (
             <button
               onClick={nextQuestionHandler}

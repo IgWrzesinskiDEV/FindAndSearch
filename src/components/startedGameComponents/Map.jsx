@@ -1,8 +1,12 @@
 /* eslint-disable react/prop-types */
-import { GoogleMap, Circle, LoadScript } from "@react-google-maps/api";
+import { useCallback, useState } from "react";
+
+import { GoogleMap, useLoadScript, Polygon } from "@react-google-maps/api";
+
+const libraries = ["drawing", "places"];
+const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 // Replace with your actual Google Maps API key
-const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 const mapContainerStyle = {
   height: "50vh",
@@ -11,37 +15,52 @@ const mapContainerStyle = {
   display: "block",
 };
 
-const defaultZoom = 18;
+const Map = ({ mapData }) => {
+  const [map, setMap] = useState(null);
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: GOOGLE_MAPS_API_KEY,
+    libraries,
+  });
+  console.log(mapData, "mapData");
 
-const Map = ({ lat, lng, radius }) => {
-  const cords = {
-    lat: +lat,
-    lng: +lng,
+  const onMapLoad = useCallback((mapInstance) => {
+    setMap(mapInstance);
+  }, []);
+
+  const options = {
+    ...mapData.mapInfo,
   };
 
+  const polygons = Object.entries(mapData.polygonsCords).map((el) => {
+    console.log(el[1], "el");
+    return el[1];
+  });
+
+  if (loadError) return <div>Error loading maps</div>;
+  if (!isLoaded) return <div>Loading Maps...</div>;
+
   return (
-    <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
-      <GoogleMap
-        mapContainerStyle={mapContainerStyle}
-        center={cords}
-        zoom={defaultZoom}
+    <GoogleMap
+      mapContainerStyle={mapContainerStyle}
+      zoom={options.zoom}
+      center={options.centerCords}
+      options={{
+        streetViewControl: false,
+      }}
+      onLoad={onMapLoad}
+    >
+      <Polygon
+        paths={polygons}
         options={{
-          streetViewControl: false,
+          fillColor: "#F87171",
+          fillOpacity: 0.4,
+          strokeWeight: 2,
+          clickable: false,
+          editable: false,
+          zIndex: 1,
         }}
-      >
-        <Circle
-          center={cords}
-          radius={+radius} // Radius in meters
-          options={{
-            fillColor: "#FF0000", // Red fill color
-            fillOpacity: 0.3, // 30% opacity
-            strokeColor: "#FF0000", // Red stroke color
-            strokeOpacity: 0.8, // 80% opacity
-            strokeWeight: 2, // Stroke width
-          }}
-        />
-      </GoogleMap>
-    </LoadScript>
+      />
+    </GoogleMap>
   );
 };
 

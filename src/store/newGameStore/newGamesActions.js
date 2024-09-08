@@ -52,7 +52,10 @@ export const postNewGame = (game) => {
         };
 
         await toast.promise(
-          Promise.all([setDoc(gameRef, { ...questionsData }), setMapPromise()]),
+          Promise.all([
+            setDoc(gameRef, { ...questionsData, gameId: game.id }),
+            setMapPromise(),
+          ]),
           {
             pending: "Sending game... 🚀",
             success: "Game has been added successfully 👌",
