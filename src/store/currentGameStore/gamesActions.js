@@ -2,10 +2,12 @@ import { gameDataActions } from "./gameData";
 import { toast } from "react-toastify";
 import { db } from "../../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import { useSelector } from "react-redux";
+
+import { appDataActions } from "../appStore/appData";
 export const fetchGameId = (gameId) => {
   return async (dispatch) => {
     try {
+      dispatch(appDataActions.setLoading(true));
       const gameRef = doc(db, "games", gameId);
       console.log(gameRef);
 
@@ -21,6 +23,8 @@ export const fetchGameId = (gameId) => {
     } catch (err) {
       toast.error("Failed to find new game");
       console.log(err);
+    } finally {
+      dispatch(appDataActions.setLoading(false));
     }
   };
 };

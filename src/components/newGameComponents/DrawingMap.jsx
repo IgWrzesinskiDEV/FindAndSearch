@@ -20,6 +20,7 @@ import { GiBroom } from "react-icons/gi";
 import { newMapDataActions } from "../../store/newMapStore/newMapData";
 import { toast } from "react-toastify";
 import { TbMapPinSearch } from "react-icons/tb";
+import Loader from "../UI/Loader";
 
 const libraries = ["drawing", "places"];
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -107,7 +108,7 @@ const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
   }, []);
 
   if (loadError) return <div>Error loading maps</div>;
-  if (!isLoaded) return <div>Loading Maps...</div>;
+  if (!isLoaded) return <Loader loaderText="Loading map..." />;
   const handlePolygonComplete = (polygon) => {
     setPolygonsMvc((prev) => [...prev, polygon]);
     dispatch(

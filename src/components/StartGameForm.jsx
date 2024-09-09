@@ -2,6 +2,7 @@
 import { useDispatch } from "react-redux";
 import { fetchGameId } from "../store/currentGameStore/gamesActions";
 import Button from "./UI/Button";
+
 export default function StartGameForm({ placeholder, label, name }) {
   const dispatch = useDispatch();
   function submitHandler(e) {
