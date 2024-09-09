@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
+import Button from "../UI/Button";
 import { gameDataActions } from "../../store/currentGameStore/gameData";
 import { checkUserAnswer } from "../../hashing";
 export default function QuestionForm({ label, name, placeholder }) {
@@ -18,14 +19,18 @@ export default function QuestionForm({ label, name, placeholder }) {
 
   const inputRef = useRef();
   let isDisabled = correctAnswer;
-  function submitHandler(e) {
+  async function submitHandler(e) {
     e.preventDefault();
     const userAnswer = inputRef.current.value;
-
-    if (checkUserAnswer(userAnswer.toLowerCase(), currentQuestionAnswer)) {
+    console.log(userAnswer, "userAnswer");
+    console.log(currentQuestionAnswer, "currentQuestionAnswer");
+    const isCorectAnswer = await checkUserAnswer(
+      userAnswer.toLowerCase(),
+      currentQuestionAnswer
+    );
+    if (isCorectAnswer) {
       isDisabled = true;
       dispatch(gameDataActions.setAnswerState(true));
-      //dispatch(gameDataActions.);
     } else {
       dispatch(gameDataActions.setAnswerState(false));
     }
@@ -34,25 +39,24 @@ export default function QuestionForm({ label, name, placeholder }) {
 
   return (
     <form
-      className="flex flex-col w-4/5 mx-auto gap-3 justify-center items-center h-[30vh] border-2 border-sky-500 rounded-md"
+      className="flex flex-col items-center justify-center w-4/5 gap-3 p-8 mx-auto border-2 rounded-md border-sky-500"
       onSubmit={submitHandler}
     >
-      <label htmlFor={name} className="p-2 my-5 text-xl text-center">
+      <label
+        htmlFor={name}
+        className="w-full p-2 text-3xl text-center break-words text-pretty"
+      >
         {label}
       </label>
       <input
         type="text"
         name={name}
+        disabled={isDisabled}
         ref={inputRef}
-        placeholder={placeholder}
+        placeholder={isDisabled ? "" : placeholder}
         className="p-2 placeholder:p-2"
       />
-      <button
-        className="w-1/3 p-2 mt-2 border-2 rounded-md border-blueBorder disabled:opacity-50"
-        disabled={isDisabled}
-      >
-        Click!
-      </button>
+      <Button disabled={isDisabled}>Check Answer</Button>
     </form>
   );
 }

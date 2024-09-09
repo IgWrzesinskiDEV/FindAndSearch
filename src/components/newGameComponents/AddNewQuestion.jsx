@@ -57,6 +57,8 @@ export default function AddNewQuestion({
     // console.log(mapRef.current.getMapInfo());
 
     e.target.reset();
+    console.log(mapRef.current.getMapInfo(), "mapRef.current.getMapInfo()");
+
     const question = {
       questionData: { questionText: qAndA.questionText, answer: qAndA.answer },
       mapData: {
@@ -124,7 +126,7 @@ export default function AddNewQuestion({
         {error.polygonsCords && (
           <p className="text-red-500">Required at least one area selected</p>
         )}
-        <Button>{editedQuestion ? "Edit " : "Submit "}</Button>
+        <Button>{editedQuestion ? "Edit " : "Create "}</Button>
       </form>
     </div>
   );

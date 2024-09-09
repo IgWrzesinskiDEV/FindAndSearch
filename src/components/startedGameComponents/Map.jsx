@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { useCallback, useState } from "react";
 
 import { GoogleMap, useLoadScript, Polygon } from "@react-google-maps/api";
 
@@ -16,23 +15,16 @@ const mapContainerStyle = {
 };
 
 const Map = ({ mapData }) => {
-  const [map, setMap] = useState(null);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,
     libraries,
   });
-  console.log(mapData, "mapData");
-
-  const onMapLoad = useCallback((mapInstance) => {
-    setMap(mapInstance);
-  }, []);
 
   const options = {
     ...mapData.mapInfo,
   };
 
   const polygons = Object.entries(mapData.polygonsCords).map((el) => {
-    console.log(el[1], "el");
     return el[1];
   });
 
@@ -47,7 +39,6 @@ const Map = ({ mapData }) => {
       options={{
         streetViewControl: false,
       }}
-      onLoad={onMapLoad}
     >
       <Polygon
         paths={polygons}

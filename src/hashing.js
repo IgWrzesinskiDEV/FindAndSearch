@@ -2,7 +2,6 @@ import bcrypt from "bcryptjs";
 
 export const checkUserAnswer = async (userAnswer, hashedCorrectAnswer) => {
   const isCorrect = await bcrypt.compare(userAnswer, hashedCorrectAnswer);
-
   return isCorrect;
 };
 

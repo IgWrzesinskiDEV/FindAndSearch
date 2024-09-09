@@ -26,7 +26,7 @@ const AddNewGameSection = forwardRef(function AddNewGameSection(
           placeholder="game ID"
           name="gameId"
           ref={ref}
-          className="w-1/5"
+          className="w-2/5 lg:w-1/5"
         />
         <Table />
 
@@ -35,8 +35,9 @@ const AddNewGameSection = forwardRef(function AddNewGameSection(
         <Button
           onClick={() => openModalHandler(newQuestionsModalRef)}
           type="button"
+          className="leading-8"
         >
-          Add question <FaPlus />
+          <FaPlus className="text-2xl " /> Add question
         </Button>
         <Button
           onClick={() => openModalHandler(confirmModalRef)}

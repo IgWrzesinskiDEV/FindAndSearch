@@ -40,7 +40,6 @@ export default function NewGame() {
       gameIdRef.current.value = "";
     } catch (error) {
       console.error("Failed to post new game:", error);
-      // Optionally handle the error
     }
   }
   // dispatch(postNewGame(game));
@@ -53,7 +52,7 @@ export default function NewGame() {
     <>
       <Modal ref={newQuestionsModalRef}>
         <button
-          className="absolute top-5 right-5"
+          className="absolute lg:top-5 lg:right-5 top-2 right-2"
           onClick={() => closeModalHandler(newQuestionsModalRef)}
         >
           <FaRegCircleXmark className="text-3xl text-red-500" />

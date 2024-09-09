@@ -24,8 +24,9 @@ import { TbMapPinSearch } from "react-icons/tb";
 const libraries = ["drawing", "places"];
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const mapContainerStyle = {
-  width: "80%",
+  width: "95%",
   height: "50vh",
+  margin: "10px",
 };
 
 let center = {
@@ -43,29 +44,30 @@ let options = {
 
 const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
   const isModalOpen = useSelector((state) => state.newMapData.isModalOpen);
-  const polygonsCords = useSelector((state) => state.newMapData.polygonsCords);
+
   const [polygonsMvc, setPolygonsMvc] = useState([]);
   const dispatch = useDispatch();
   const [map, setMap] = useState(null);
   const [autocomplete, setAutocomplete] = useState(null);
   const inputRef = useRef(null);
-
+  console.log(mapDataFromEdit, "mapDataFromEdit");
   const [path, setPath] = useState(mapDataFromEdit?.polygonsCords || []);
   useEffect(() => {
-    //console.log(mapDataFromEdit);
-
-    if (mapDataFromEdit && isModalOpen) {
-      center = {
-        lat: mapDataFromEdit.mapInfo.centerCords.lat,
-        lng: mapDataFromEdit.mapInfo.centerCords.lng,
-      };
-      options = {
-        zoom: mapDataFromEdit.mapInfo.zoom,
-        center,
-      };
+    // if (mapDataFromEdit) {
+    //   console.log("in useEffect but in IF mapDataFromEdit");
+    // }
+    if (mapDataFromEdit) {
+      // center = {
+      //   lat: mapDataFromEdit.mapInfo.centerCords.lat,
+      //   lng: mapDataFromEdit.mapInfo.centerCords.lng,
+      // };
+      // options = {
+      //   zoom: mapDataFromEdit.mapInfo.zoom,
+      //   center,
+      // };
       setPath(mapDataFromEdit.polygonsCords);
     }
-  }, [mapDataFromEdit, dispatch, isModalOpen, polygonsCords]);
+  }, [mapDataFromEdit, dispatch]);
   const clearPolygons = useCallback(() => {
     polygonsMvc.forEach((polygon) => polygon.setMap(null));
     setPolygonsMvc([]);
@@ -159,10 +161,6 @@ const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
 
   return (
     <>
-      <Button onClick={getMapInfo} type="button" className="">
-        Get map info
-      </Button>
-
       <label
         htmlFor="place"
         className="flex items-center justify-center gap-2 leading-tight text-center "
@@ -185,8 +183,10 @@ const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
       </Autocomplete>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        zoom={options.zoom}
-        center={options.center}
+        zoom={mapDataFromEdit ? mapDataFromEdit.mapInfo.zoom : options.zoom}
+        center={
+          mapDataFromEdit ? mapDataFromEdit.mapInfo.centerCords : options.center
+        }
         options={{
           streetViewControl: false,
         }}

@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useDispatch } from "react-redux";
 import { fetchGameId } from "../store/currentGameStore/gamesActions";
+import Button from "./UI/Button";
 export default function StartGameForm({ placeholder, label, name }) {
   const dispatch = useDispatch();
   function submitHandler(e) {
@@ -24,9 +25,7 @@ export default function StartGameForm({ placeholder, label, name }) {
         placeholder={placeholder}
         className="p-2"
       />
-      <button className="w-1/4 p-2 mt-2 border-2 rounded-md border-sky-500">
-        Click!
-      </button>
+      <Button>Find Game</Button>
     </form>
   );
 }
