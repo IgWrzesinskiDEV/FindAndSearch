@@ -6,7 +6,7 @@ export default function WelcomeScreen() {
       <h1 className="mt-5 text-4xl font-bold uppercase text-primaryLighter">
         Find and Search
       </h1>
-      <img src="gameLogo1.png" alt="A map with marker on it" className="w-80" />
+      <img src="gameLogo.png" alt="A map with marker on it" className="w-80" />
       {/* <h2 className="my-5 text-2xl font-bold uppercase text-cyan-500">
         To start game click this button
       </h2> */}
