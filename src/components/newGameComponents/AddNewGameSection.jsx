@@ -16,7 +16,7 @@ const AddNewGameSection = forwardRef(function AddNewGameSection(
 
   return (
     <Section className="w-full">
-      <h1 className="my-5 text-2xl font-bold text-center uppercase text-sky-400">
+      <h1 className="w-1/2 my-3 text-2xl font-bold text-center uppercase text-sky-400">
         Create new game here!
       </h1>
       <form className="flex flex-col items-center w-3/4 p-4 border-2 rounded-md gap-y-4 border-primary">

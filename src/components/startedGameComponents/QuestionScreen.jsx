@@ -7,7 +7,8 @@ import { gameDataActions } from "../../store/currentGameStore/gameData";
 import { fetchMapData } from "../../store/currentGameStore/gamesActions";
 import { useEffect, useRef } from "react";
 import Modal from "../UI/Modal";
-import Button from "../UI/Button";
+
+import ConfirmExit from "../UI/ConfirmExit";
 export default function QuestionScreen() {
   const confirmModalRef = useRef();
   const currentGameId = useSelector((state) => state.game.currentGame.gameId);
@@ -79,28 +80,11 @@ export default function QuestionScreen() {
   return (
     <>
       <Modal ref={confirmModalRef}>
-        <div className="flex flex-col items-center justify-center p-2">
-          <h1 className="text-3xl font-bold text-red-600 uppercase">
-            Are you sure?
-          </h1>
-          <p className="mt-6 text-2xl font-bold">You want to exit the game?</p>
-          <p className="mt-6 text-2xl font-bold">All progress will be lost!</p>
-          <div className="flex w-3/4 my-6 justify-evenly">
-            <Button
-              className="bg-red-500 border-none "
-              onClick={closeExtiModal}
-            >
-              No
-            </Button>
-            <Button
-              // className="flex items-center justify-center w-1/4 p-2 mt-2 border-2 rounded-md border-sky-500"
-              onClick={exitGameHandler}
-              className="bg-green-500 border-none"
-            >
-              Yes
-            </Button>
-          </div>
-        </div>
+        <ConfirmExit
+          closeExtiModal={closeExtiModal}
+          exitHandler={exitGameHandler}
+          text="You want to exit the game?"
+        />
       </Modal>
       <section className="flex flex-col items-center">
         <button

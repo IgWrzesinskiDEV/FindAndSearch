@@ -11,7 +11,7 @@ export default function StartScreen() {
   return (
     <>
       <Section className="flex flex-col items-center">
-        <h1 className="my-5 text-2xl font-bold text-center uppercase text-sky-400">
+        <h1 className="my-3 text-2xl font-bold text-center uppercase text-sky-400">
           To start
           <br /> enter the game id
         </h1>
