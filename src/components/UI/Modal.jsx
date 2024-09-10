@@ -25,7 +25,7 @@ const Modal = forwardRef(function Modal({ children }, ref) {
     <>
       <dialog
         ref={modalRef}
-        className="z-50 w-10/12 p-4 my-8 border-2 rounded-md shadow-lg lg:w-1/2 min-h-2/3 border-sky-500 "
+        className="fixed z-50 w-10/12 p-4 -translate-x-1/2 -translate-y-1/2 border-2 rounded-md shadow-lg top-1/2 left-1/2 lg:w-1/2 min-h-2/3 border-sky-500 "
       >
         {children}
       </dialog>

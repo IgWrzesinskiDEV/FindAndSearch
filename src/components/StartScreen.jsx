@@ -3,9 +3,11 @@ import { useSelector } from "react-redux";
 import Timer from "./Timer";
 import Section from "./UI/Section";
 import Loader from "./UI/Loader";
+
 export default function StartScreen() {
   const currentGame = useSelector((state) => state.game.currentGame);
   const isLoading = useSelector((state) => state.app.isLoading);
+
   return (
     <>
       <Section className="flex flex-col items-center">

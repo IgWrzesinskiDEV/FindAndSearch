@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function WelcomeScreen() {
   return (
     <header className="flex flex-col items-center">
@@ -8,7 +10,8 @@ export default function WelcomeScreen() {
       <h2 className="my-5 text-2xl font-bold uppercase text-cyan-500">
         To start game click this button
       </h2>
-      {/* <Link to="/playGame">
+
+      <Link to="/playGame">
         <button className="px-4 py-2 font-bold text-white rounded bg-cyan-500">
           Start Game
         </button>
@@ -20,7 +23,7 @@ export default function WelcomeScreen() {
         <button className="px-4 py-2 font-bold text-white rounded bg-cyan-500">
           Create New Game
         </button>
-      </Link> */}
+      </Link>
     </header>
   );
 }

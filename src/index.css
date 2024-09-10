@@ -5,9 +5,8 @@
 @tailwind utilities;
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Inter", system-ui;
   line-height: 1.5;
-  font-weight: 400;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
@@ -34,14 +33,6 @@
 
 ::backdrop {
   background-color: rgba(0, 0, 0, 0.5);
-}
-
-dialog {
-  display: fixed;
-  top: 50%;
-
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 /* HTML5 display-role reset for older browsers */

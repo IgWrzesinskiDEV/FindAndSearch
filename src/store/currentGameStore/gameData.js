@@ -54,6 +54,7 @@ const gameData = createSlice({
     setCurrentMap: (state, action) => {
       state.currentMap = action.payload;
     },
+    resetGame: () => initialGameState,
   },
 });
 
