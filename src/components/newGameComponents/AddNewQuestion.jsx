@@ -91,7 +91,7 @@ export default function AddNewQuestion({
   console.log(newGameQuestions);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center ">
       <h1 className="mb-5 text-2xl font-bold uppercase text-primaryLighter">
         {title}
       </h1>

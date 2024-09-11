@@ -19,11 +19,10 @@ export const fetchGameId = (gameId) => {
         dispatch(gameDataActions.setCurrentGameQuestions());
         toast.success("Game found!");
       } else {
-        dispatch(gameDataActions.setCurrentGame(-1));
+        toast.error("Game not found!");
       }
     } catch (err) {
-      toast.error("Failed to find new game");
-      console.log(err);
+      toast.error("Enter a valid game id");
     } finally {
       dispatch(appDataActions.setLoading(false));
     }

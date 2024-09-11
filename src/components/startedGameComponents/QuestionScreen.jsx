@@ -6,7 +6,7 @@ import { IoExitOutline } from "react-icons/io5";
 import { FaArrowDown } from "react-icons/fa";
 import { gameDataActions } from "../../store/currentGameStore/gameData";
 import { fetchMapData } from "../../store/currentGameStore/gamesActions";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Modal from "../UI/Modal";
 
 import ConfirmExit from "../UI/ConfirmExit";
