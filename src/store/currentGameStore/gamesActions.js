@@ -17,6 +17,7 @@ export const fetchGameId = (gameId) => {
         //console.log(gameDoc.data());
         dispatch(gameDataActions.setCurrentGame(gameDoc.data()));
         dispatch(gameDataActions.setCurrentGameQuestions());
+        toast.success("Game found!");
       } else {
         dispatch(gameDataActions.setCurrentGame(-1));
       }

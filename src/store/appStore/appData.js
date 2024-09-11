@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialAppState = {
   isLoading: false,
+  isShaking: false,
 };
 
 const appData = createSlice({
@@ -9,6 +10,9 @@ const appData = createSlice({
   reducers: {
     setLoading: (state, action) => {
       state.isLoading = action.payload;
+    },
+    setIsShaking: (state, action) => {
+      state.isShaking = action.payload;
     },
   },
 });

@@ -4,6 +4,7 @@ import { useRef } from "react";
 import Button from "../UI/Button";
 import { gameDataActions } from "../../store/currentGameStore/gameData";
 import { checkUserAnswer } from "../../hashing";
+import { appDataActions } from "../../store/appStore/appData";
 export default function QuestionForm({ label, name, placeholder }) {
   const dispatch = useDispatch();
   const correctAnswer = useSelector(
@@ -33,6 +34,10 @@ export default function QuestionForm({ label, name, placeholder }) {
       dispatch(gameDataActions.setAnswerState(true));
     } else {
       dispatch(gameDataActions.setAnswerState(false));
+      dispatch(appDataActions.setIsShaking(true));
+      setTimeout(() => {
+        dispatch(appDataActions.setIsShaking(false));
+      }, 500);
     }
     e.target.reset();
   }

@@ -10,7 +10,7 @@ const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const mapContainerStyle = {
   height: "50vh",
   width: "90%",
-  margin: "40px",
+  margin: "10px",
   display: "block",
 };
 

@@ -3,16 +3,17 @@ import Map from "./Map";
 import { useSelector, useDispatch } from "react-redux";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import { IoExitOutline } from "react-icons/io5";
+import { FaArrowDown } from "react-icons/fa";
 import { gameDataActions } from "../../store/currentGameStore/gameData";
 import { fetchMapData } from "../../store/currentGameStore/gamesActions";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Modal from "../UI/Modal";
 
 import ConfirmExit from "../UI/ConfirmExit";
 export default function QuestionScreen() {
   const confirmModalRef = useRef();
   const currentGameId = useSelector((state) => state.game.currentGame.gameId);
-
+  const isShaking = useSelector((state) => state.app.isShaking);
   const questionsDispleyed = useSelector(
     (state) => state.game.questionsDispleyed
   );
@@ -24,10 +25,7 @@ export default function QuestionScreen() {
   );
   const mapData = useSelector((state) => state.game.currentMap);
   const dispatch = useDispatch();
-  //const crrQuestion = questionsDispleyed[currentQuestionIndex];
-  //console.log(questionsDispleyed, "questionsDispleyed");
-  //console.log(currentGameQuestions, "currentGameQuestions");
-  //console.log(currentQuestionIndex, "currentQuestionIndex");
+
   let isLastQuestion = false;
   if (currentQuestionIndex === currentGameQuestions.length - 1) {
     isLastQuestion = true;
@@ -36,6 +34,8 @@ export default function QuestionScreen() {
   const currentQuestion = questionsDispleyed[currentQuestionIndex].question;
   const isCorrectAnswer =
     questionsDispleyed[currentQuestionIndex].correctAnswer;
+  console.log(isCorrectAnswer, "isCorrectAnswer");
+
   useEffect(() => {
     if (isCorrectAnswer) {
       dispatch(fetchMapData(currentQuestion.id, currentGameId));
@@ -109,17 +109,32 @@ export default function QuestionScreen() {
         />
         {isCorrectAnswer && mapData ? (
           <>
-            <p className="mt-6 text-2xl font-bold">Correct Answer!</p>
+            <p className="mt-6 text-3xl font-bold text-green-400">
+              Correct Answer!
+              <span role="img" aria-label="check" className="ml-1">
+                ✅
+              </span>
+            </p>
             <p className="mt-6 text-xl font-bold">
               {isLastQuestion
                 ? "Go to finnal location!"
                 : "Go to next location!"}
             </p>
+            <FaArrowDown className="mt-8 text-6xl text-primary animate-bounce" />
             <Map mapData={mapData} />
           </>
         ) : null}
         {!isCorrectAnswer && isCorrectAnswer !== null && (
-          <p className="mt-6 text-2xl font-bold">Incorrect Answer!</p>
+          <p
+            className={`mt-6 text-3xl font-bold text-red-500 ${
+              isShaking ? "shake" : ""
+            }`}
+          >
+            Incorrect Answer!
+            <span role="img" aria-label="cross" className="ml-1">
+              ❌
+            </span>
+          </p>
         )}
         <p className="flex justify-around w-full my-6">
           {currentQuestionIndex !== 0 && (
