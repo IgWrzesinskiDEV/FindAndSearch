@@ -41,6 +41,7 @@ export default function QuestionScreen() {
       dispatch(fetchMapData(currentQuestion.id, currentGameId));
     }
   }, [isCorrectAnswer, currentQuestion.id, currentGameId, dispatch]);
+
   function nextQuestionHandler() {
     if (currentQuestionIndex === questionsDispleyed.length - 1) {
       dispatch(
@@ -50,19 +51,11 @@ export default function QuestionScreen() {
           questionIndex: currentQuestionIndex + 1,
         })
       );
-      dispatch(gameDataActions.incrementCurrentQuestionIndex());
     } else {
       dispatch(gameDataActions.incrementCurrentQuestionIndex());
     }
   }
   function previousQuestionHandler() {
-    dispatch(
-      gameDataActions.setCurrentQuestion({
-        question: currentGameQuestions[currentQuestionIndex - 1],
-        correctAnswer: true,
-      })
-    );
-
     dispatch(gameDataActions.decrementCurrentQuestionIndex());
   }
 

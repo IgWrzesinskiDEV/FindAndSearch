@@ -36,18 +36,13 @@ export default function NewGame() {
     try {
       closeModalHandler(confirmModalRef);
       await dispatch(postNewGame(game));
-      // Reset gameIdRef only after dispatch completes successfully
+
       gameIdRef.current.value = "";
     } catch (error) {
       console.error("Failed to post new game:", error);
     }
   }
-  // dispatch(postNewGame(game));
-  // gameIdRef.current.value = "";
 
-  // closeModalHandler(confirmModalRef);
-
-  // const thClass = "border-2 p-4 border-primary";
   return (
     <>
       <Modal ref={newQuestionsModalRef}>

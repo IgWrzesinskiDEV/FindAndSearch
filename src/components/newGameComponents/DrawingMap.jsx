@@ -1,4 +1,5 @@
-/* eslint-disable react/prop-types */
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import {
   useCallback,
   useState,
@@ -11,7 +12,6 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   GoogleMap,
   useLoadScript,
-  Autocomplete,
   DrawingManager,
   Polygon,
 } from "@react-google-maps/api";
@@ -19,8 +19,9 @@ import Button from "../UI/Button";
 import { GiBroom } from "react-icons/gi";
 import { newMapDataActions } from "../../store/newMapStore/newMapData";
 import { toast } from "react-toastify";
-import { TbMapPinSearch } from "react-icons/tb";
+
 import Loader from "../UI/Loader";
+import AutoCompleteComponent from "./map/AutoCompleteComponent";
 
 const libraries = ["drawing", "places"];
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -34,10 +35,7 @@ let center = {
   lat: 52.0693,
   lng: 19.4803,
 };
-// let center = {
-//   lat: 37.772,
-//   lng: -122.214,
-// };
+
 let options = {
   zoom: 8,
   center,
@@ -49,23 +47,12 @@ const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
   const [polygonsMvc, setPolygonsMvc] = useState([]);
   const dispatch = useDispatch();
   const [map, setMap] = useState(null);
-  const [autocomplete, setAutocomplete] = useState(null);
+
   const inputRef = useRef(null);
-  console.log(mapDataFromEdit, "mapDataFromEdit");
+
   const [path, setPath] = useState(mapDataFromEdit?.polygonsCords || []);
   useEffect(() => {
-    // if (mapDataFromEdit) {
-    //   console.log("in useEffect but in IF mapDataFromEdit");
-    // }
     if (mapDataFromEdit) {
-      // center = {
-      //   lat: mapDataFromEdit.mapInfo.centerCords.lat,
-      //   lng: mapDataFromEdit.mapInfo.centerCords.lng,
-      // };
-      // options = {
-      //   zoom: mapDataFromEdit.mapInfo.zoom,
-      //   center,
-      // };
       setPath(mapDataFromEdit.polygonsCords);
     }
   }, [mapDataFromEdit, dispatch]);
@@ -73,8 +60,6 @@ const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
     polygonsMvc.forEach((polygon) => polygon.setMap(null));
     setPolygonsMvc([]);
     dispatch(newMapDataActions.resetPolygons());
-    //console.log(polygonsCords, "polygonsCords after clearing");
-    //console.log(polygonsMvc, "polygonsMvc after clearing");
   }, [dispatch, polygonsMvc]);
 
   useEffect(() => {
@@ -84,11 +69,7 @@ const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
     if (inputRef.current) {
       inputRef.current.value = "";
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isModalOpen]);
-  useImperativeHandle(ref, () => ({
-    getMapInfo,
-  }));
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,
@@ -106,6 +87,18 @@ const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
   const onMapLoad = useCallback((mapInstance) => {
     setMap(mapInstance);
   }, []);
+  function getMapInfo() {
+    const mapInfo = {
+      centerCords: map.getCenter().toJSON(),
+      zoom: map.getZoom(),
+    };
+
+    return mapInfo;
+  }
+
+  useImperativeHandle(ref, () => ({
+    getMapInfo,
+  }));
 
   if (loadError) return <div>Error loading maps</div>;
   if (!isLoaded) return <Loader loaderText="Loading map..." />;
@@ -120,7 +113,6 @@ const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
       )
     );
   };
-  // console.log(polygonsCords);
 
   const drawingOptions = {
     drawingControl: true,
@@ -138,50 +130,10 @@ const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
       zIndex: 1,
     },
   };
-  //console.log(polygonsCords);
-
-  function getMapInfo() {
-    const mapInfo = {
-      centerCords: map.getCenter().toJSON(),
-      zoom: map.getZoom(),
-    };
-
-    return mapInfo;
-  }
-
-  const handlePlaceChanged = () => {
-    const { geometry } = autocomplete.getPlace();
-    const bounds = new window.google.maps.LatLngBounds();
-    if (geometry.viewport) {
-      bounds.union(geometry.viewport);
-    } else {
-      bounds.extend(geometry.location);
-    }
-    map.fitBounds(bounds);
-  };
 
   return (
     <>
-      <label
-        htmlFor="place"
-        className="flex items-center justify-center gap-2 leading-tight text-center "
-      >
-        <TbMapPinSearch className="text-3xl text-primaryLighter" />
-        Search for place!
-      </label>
-      <Autocomplete
-        onLoad={setAutocomplete}
-        onPlaceChanged={handlePlaceChanged}
-        className="z-50 flex items-center justify-center w-3/4 gap-2"
-      >
-        <input
-          ref={inputRef}
-          type="text"
-          name="place"
-          placeholder="Enter a location"
-          className="w-3/4 p-2 outline outline-primaryDarker outline-2 focus:outline-primary"
-        />
-      </Autocomplete>
+      <AutoCompleteComponent map={map} ref={inputRef} />
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={mapDataFromEdit ? mapDataFromEdit.mapInfo.zoom : options.zoom}

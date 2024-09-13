@@ -15,9 +15,7 @@ export default function AddNewQuestion({
   editedQuestion,
 }) {
   const polygonsCords = useSelector((state) => state.newMapData.polygonsCords);
-  const newGameQuestions = useSelector(
-    (state) => state.newGame.newGameQuestions
-  );
+
   const dispatch = useDispatch();
   const mapRef = useRef();
   const [error, setError] = useState({
@@ -54,10 +52,8 @@ export default function AddNewQuestion({
     ) {
       return;
     }
-    // console.log(mapRef.current.getMapInfo());
 
     e.target.reset();
-    console.log(mapRef.current.getMapInfo(), "mapRef.current.getMapInfo()");
 
     const question = {
       questionData: { questionText: qAndA.questionText, answer: qAndA.answer },
@@ -73,11 +69,8 @@ export default function AddNewQuestion({
       question.id = Math.random();
       dispatch(newGameDataActions.pushNewGameQuestion(question));
     }
-    //console.log(polygonsCords, "polygonsCords before");
 
     dispatch(newMapDataActions.resetPolygons());
-
-    // console.log(polygonsCords, "polygonsCords after");
 
     onCloseModal();
   }
@@ -88,7 +81,6 @@ export default function AddNewQuestion({
       setError((prev) => ({ ...prev, polygonsCords: false }));
     }
   }, [polygonsCords]);
-  console.log(newGameQuestions);
 
   return (
     <div className="flex flex-col items-center ">

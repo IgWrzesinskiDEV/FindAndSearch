@@ -23,8 +23,7 @@ export default function QuestionForm({ label, name, placeholder }) {
   async function submitHandler(e) {
     e.preventDefault();
     const userAnswer = inputRef.current.value;
-    console.log(userAnswer, "userAnswer");
-    console.log(currentQuestionAnswer, "currentQuestionAnswer");
+
     const isCorectAnswer = await checkUserAnswer(
       userAnswer.toLowerCase(),
       currentQuestionAnswer

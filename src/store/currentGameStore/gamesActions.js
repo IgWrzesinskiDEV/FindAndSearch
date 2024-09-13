@@ -23,6 +23,7 @@ export const fetchGameId = (gameId) => {
       }
     } catch (err) {
       toast.error("Enter a valid game id");
+      console.log(err);
     } finally {
       dispatch(appDataActions.setLoading(false));
     }
