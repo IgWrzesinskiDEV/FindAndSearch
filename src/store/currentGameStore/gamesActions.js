@@ -9,14 +9,11 @@ export const fetchGameId = (gameId) => {
     try {
       dispatch(appDataActions.setLoading(true));
       const gameRef = doc(db, "games", gameId);
-      console.log(gameRef);
 
       const gameDoc = await getDoc(gameRef);
 
       if (gameDoc.exists()) {
-        //console.log(gameDoc.data());
         dispatch(gameDataActions.setCurrentGame(gameDoc.data()));
-        dispatch(gameDataActions.setCurrentGameQuestions());
         toast.success("Game found!");
       } else {
         toast.error("Game not found!");
@@ -33,8 +30,6 @@ export const fetchGameId = (gameId) => {
 export const fetchMapData = (questionId, gameId) => {
   return async (dispatch) => {
     try {
-      console.log(gameId, "gameId");
-
       const mapRef = doc(
         db,
         "games",
@@ -46,11 +41,8 @@ export const fetchMapData = (questionId, gameId) => {
       const mapDoc = await getDoc(mapRef);
 
       if (mapDoc.exists()) {
-        console.log(mapDoc.data(), "exists");
         dispatch(gameDataActions.setCurrentMap(mapDoc.data().mapData));
       } else {
-        console.log("not exists");
-
         dispatch(gameDataActions.setCurrentMap(-1));
       }
     } catch (err) {

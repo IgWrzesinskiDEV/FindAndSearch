@@ -75,7 +75,6 @@ export default function AddNewQuestion({
     onCloseModal();
   }
 
-  //const { questionText, answer, latitude, longitude, radius } = editedQuestion;
   useEffect(() => {
     if (polygonsCords.length > 0) {
       setError((prev) => ({ ...prev, polygonsCords: false }));

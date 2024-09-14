@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 
-import { GoogleMap, useLoadScript, Polygon } from "@react-google-maps/api";
+import { GoogleMap, Polygon, useJsApiLoader } from "@react-google-maps/api";
 import Loader from "../UI/Loader";
 
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 // Replace with your actual Google Maps API key
-
+const libraries = ["drawing", "places"];
 const mapContainerStyle = {
   height: "500px",
   width: "90%",
@@ -15,8 +15,9 @@ const mapContainerStyle = {
 };
 
 const Map = ({ mapData }) => {
-  const { isLoaded, loadError } = useLoadScript({
+  const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,
+    libraries,
   });
 
   const options = {

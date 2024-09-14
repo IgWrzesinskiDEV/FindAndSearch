@@ -14,8 +14,6 @@ const gameData = createSlice({
   reducers: {
     setCurrentGame: (state, action) => {
       state.currentGame = action.payload;
-    },
-    setCurrentGameQuestions: (state) => {
       const questions = state.currentGame.questionsData.sort(
         () => 0.5 - Math.random()
       );

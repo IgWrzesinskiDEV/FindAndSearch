@@ -34,7 +34,6 @@ export default function QuestionScreen() {
   const currentQuestion = questionsDispleyed[currentQuestionIndex].question;
   const isCorrectAnswer =
     questionsDispleyed[currentQuestionIndex].correctAnswer;
-  console.log(isCorrectAnswer, "isCorrectAnswer");
 
   useEffect(() => {
     if (isCorrectAnswer) {

@@ -6,12 +6,13 @@ import {
   useEffect,
   useRef,
   forwardRef,
+  memo,
   useImperativeHandle,
 } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   GoogleMap,
-  useLoadScript,
+  useJsApiLoader,
   DrawingManager,
   Polygon,
 } from "@react-google-maps/api";
@@ -41,138 +42,142 @@ let options = {
   center,
 };
 
-const DrawingMap = forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
-  const isModalOpen = useSelector((state) => state.newMapData.isModalOpen);
+const DrawingMap = memo(
+  forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
+    const isModalOpen = useSelector((state) => state.newMapData.isModalOpen);
 
-  const [polygonsMvc, setPolygonsMvc] = useState([]);
-  const dispatch = useDispatch();
-  const [map, setMap] = useState(null);
+    const [polygonsMvc, setPolygonsMvc] = useState([]);
+    const dispatch = useDispatch();
+    const [map, setMap] = useState(null);
 
-  const inputRef = useRef(null);
+    const inputRef = useRef(null);
 
-  const [path, setPath] = useState(mapDataFromEdit?.polygonsCords || []);
-  useEffect(() => {
-    if (mapDataFromEdit) {
-      setPath(mapDataFromEdit.polygonsCords);
-    }
-  }, [mapDataFromEdit, dispatch]);
-  const clearPolygons = useCallback(() => {
-    polygonsMvc.forEach((polygon) => polygon.setMap(null));
-    setPolygonsMvc([]);
-    dispatch(newMapDataActions.resetPolygons());
-  }, [dispatch, polygonsMvc]);
+    const [path, setPath] = useState(mapDataFromEdit?.polygonsCords || []);
+    useEffect(() => {
+      if (mapDataFromEdit) {
+        setPath(mapDataFromEdit.polygonsCords);
+      }
+    }, [mapDataFromEdit, dispatch]);
+    const clearPolygons = useCallback(() => {
+      polygonsMvc.forEach((polygon) => polygon.setMap(null));
+      setPolygonsMvc([]);
+      dispatch(newMapDataActions.resetPolygons());
+    }, [dispatch, polygonsMvc]);
 
-  useEffect(() => {
-    if (!isModalOpen || mapDataFromEdit) {
-      clearPolygons();
-    }
-    if (inputRef.current) {
-      inputRef.current.value = "";
-    }
-  }, [isModalOpen]);
+    useEffect(() => {
+      if (!isModalOpen || mapDataFromEdit) {
+        clearPolygons();
+      }
+      if (inputRef.current) {
+        inputRef.current.value = "";
+      }
+    }, [isModalOpen]);
 
-  const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: GOOGLE_MAPS_API_KEY,
-    libraries,
-  });
-
-  function clearDrawingsClickHandler() {
-    clearPolygons();
-    setPath([]);
-    toast.info("Drawings cleared", {
-      icon: () => <GiBroom className="text-5xl text-yellow-200 " />,
+    const { isLoaded, loadError } = useJsApiLoader({
+      googleMapsApiKey: GOOGLE_MAPS_API_KEY,
+      libraries,
     });
-  }
 
-  const onMapLoad = useCallback((mapInstance) => {
-    setMap(mapInstance);
-  }, []);
-  function getMapInfo() {
-    const mapInfo = {
-      centerCords: map.getCenter().toJSON(),
-      zoom: map.getZoom(),
+    function clearDrawingsClickHandler() {
+      clearPolygons();
+      setPath([]);
+      toast.info("Drawings cleared", {
+        icon: () => <GiBroom className="text-5xl text-yellow-200 " />,
+      });
+    }
+
+    const onMapLoad = useCallback((mapInstance) => {
+      setMap(mapInstance);
+    }, []);
+    function getMapInfo() {
+      const mapInfo = {
+        centerCords: map.getCenter().toJSON(),
+        zoom: map.getZoom(),
+      };
+
+      return mapInfo;
+    }
+
+    useImperativeHandle(ref, () => ({
+      getMapInfo,
+    }));
+
+    if (loadError) return <div>Error loading maps</div>;
+    if (!isLoaded) return <Loader loaderText="Loading map..." />;
+    const handlePolygonComplete = (polygon) => {
+      setPolygonsMvc((prev) => [...prev, polygon]);
+      dispatch(
+        newMapDataActions.pushPolygon(
+          polygon
+            .getPath()
+            .getArray()
+            .map((point) => point.toJSON())
+        )
+      );
     };
 
-    return mapInfo;
-  }
+    const drawingOptions = {
+      drawingControl: true,
+      drawingControlOptions: {
+        position: window.google.maps.ControlPosition.TOP_CENTER,
+        drawingModes: [window.google.maps.drawing.OverlayType.POLYGON],
+      },
 
-  useImperativeHandle(ref, () => ({
-    getMapInfo,
-  }));
+      polygonOptions: {
+        fillColor: "#F87171",
+        fillOpacity: 0.4,
+        strokeWeight: 2,
+        clickable: false,
+        editable: false,
+        zIndex: 1,
+      },
+    };
 
-  if (loadError) return <div>Error loading maps</div>;
-  if (!isLoaded) return <Loader loaderText="Loading map..." />;
-  const handlePolygonComplete = (polygon) => {
-    setPolygonsMvc((prev) => [...prev, polygon]);
-    dispatch(
-      newMapDataActions.pushPolygon(
-        polygon
-          .getPath()
-          .getArray()
-          .map((point) => point.toJSON())
-      )
-    );
-  };
-
-  const drawingOptions = {
-    drawingControl: true,
-    drawingControlOptions: {
-      position: window.google.maps.ControlPosition.TOP_CENTER,
-      drawingModes: [window.google.maps.drawing.OverlayType.POLYGON],
-    },
-
-    polygonOptions: {
-      fillColor: "#F87171",
-      fillOpacity: 0.4,
-      strokeWeight: 2,
-      clickable: false,
-      editable: false,
-      zIndex: 1,
-    },
-  };
-
-  return (
-    <>
-      <AutoCompleteComponent map={map} ref={inputRef} />
-      <GoogleMap
-        mapContainerStyle={mapContainerStyle}
-        zoom={mapDataFromEdit ? mapDataFromEdit.mapInfo.zoom : options.zoom}
-        center={
-          mapDataFromEdit ? mapDataFromEdit.mapInfo.centerCords : options.center
-        }
-        options={{
-          streetViewControl: false,
-        }}
-        onLoad={onMapLoad}
-      >
-        {map && (
-          <>
-            <DrawingManager
-              options={drawingOptions}
-              onLoad={(drawingManager) => drawingManager.setMap(map)}
-              onPolygonComplete={handlePolygonComplete}
-            />
-            {mapDataFromEdit && (
-              <Polygon
-                paths={path}
-                options={{
-                  fillColor: "#F87171",
-                  fillOpacity: 0.4,
-                  strokeWeight: 2,
-                  clickable: false,
-                  editable: false,
-                  zIndex: 1,
-                }}
+    return (
+      <>
+        <AutoCompleteComponent map={map} ref={inputRef} />
+        <GoogleMap
+          mapContainerStyle={mapContainerStyle}
+          zoom={mapDataFromEdit ? mapDataFromEdit.mapInfo.zoom : options.zoom}
+          center={
+            mapDataFromEdit
+              ? mapDataFromEdit.mapInfo.centerCords
+              : options.center
+          }
+          options={{
+            streetViewControl: false,
+          }}
+          onLoad={onMapLoad}
+        >
+          {map && (
+            <>
+              <DrawingManager
+                options={drawingOptions}
+                onLoad={(drawingManager) => drawingManager.setMap(map)}
+                onPolygonComplete={handlePolygonComplete}
               />
-            )}
-          </>
-        )}
-      </GoogleMap>
-      <Button onClick={clearDrawingsClickHandler} type="button" className="">
-        <GiBroom className="text-xl text-yellow-200 " /> Clear drawings
-      </Button>
-    </>
-  );
-});
+              {mapDataFromEdit && (
+                <Polygon
+                  paths={path}
+                  options={{
+                    fillColor: "#F87171",
+                    fillOpacity: 0.4,
+                    strokeWeight: 2,
+                    clickable: false,
+                    editable: false,
+                    zIndex: 1,
+                  }}
+                />
+              )}
+            </>
+          )}
+        </GoogleMap>
+        <Button onClick={clearDrawingsClickHandler} type="button" className="">
+          <GiBroom className="text-xl text-yellow-200 " /> Clear drawings
+        </Button>
+      </>
+    );
+  })
+);
 
 export default DrawingMap;
