@@ -29,7 +29,7 @@
 <h3 align="center">FindAndSearchGame</h3>
 
   <p align="center">
-    A fun and interactive game where players find and search for hidden items.
+    This project is a game called FindAndSearchGame that can be used for playing scavenger hunt games. 
     <br />
     <a href="https://github.com/IgrWrz21/FindAndSearch"><strong>Explore the docs »</strong></a>
     <br />
@@ -84,6 +84,7 @@
 - [![TailwindCSS][TailwindCSS]][TailwindCSS-url]
 - [![Firebase][Firebase]][Firebase-url]
 - [![React][React.js]][React-url]
+- [![Google Maps][Google-maps]][Google-maps-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -91,38 +92,100 @@
 
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+To run this project locally, follow these steps:
 
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
 
 - npm
+
   ```sh
   npm install npm@latest -g
   ```
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = "ENTER YOUR API";
-   ```
-5. Change git remote url to avoid accidental pushes to base project
-   ```sh
-   git remote set-url origin github_username/repo_name
-   git remote -v # confirm the changes
-   ```
+1. Clone the repository by running the following command in your terminal:
+
+```
+git clone https://github.com/IgrWrz21/FindAndSearch.git
+```
+
+2. Navigate to the project directory:
+
+```
+cd FindAndSearch
+```
+
+3. Install the required dependencies by running:
+
+```
+npm install
+```
+
+4. Start the development server by running:
+
+```
+npm start
+```
+
+5. Open your web browser and visit `http://localhost:3000` to see the application running.
+
+That's it! You can now explore and use the FindAndSearchGame locally on your machine.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Getting Firebase and Google Maps API Key
+
+To use Firebase and Google Maps in your project, you will need to obtain API keys for both services. Follow the instructions below to get your API keys:
+
+### Firebase API Key
+
+1. Go to the [Firebase Console](https://console.firebase.google.com/) and sign in with your Google account.
+2. Click on "Add project" or select an existing project.
+3. Once inside your project, click on the gear icon (settings) next to "Project Overview" in the left sidebar.
+4. Select "Project settings" from the dropdown menu.
+5. Scroll down to the "Your apps" section and click on the "Web" platform (</>).
+6. Register your app by providing a nickname and optional app ID.
+7. After registering your app, you will see a configuration object. Copy the `apiKey` value from this object.
+
+### Google Maps API Key
+
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/) and sign in with your Google account.
+2. Click on the project dropdown and select or create the project you want to use with Google Maps.
+3. In the left sidebar, click on "APIs & Services" and then "Credentials".
+4. Click on the "Create credentials" button and select "API key" from the dropdown menu.
+5. Copy the generated API key.
+
+Once you have obtained both the Firebase API key and the Google Maps API key, you can use them in your project to access the respective services.
+
+<strong>Remember to keep your API keys secure and avoid sharing them publicly.</strong>
+
+## Setting up .env file and API Keys
+
+To set up your .env file and add your API keys, follow these steps:
+
+1. Create a new file in the root directory of your project called `.env`.
+
+2. Open the `.env` file in a text editor.
+
+3. Add the following lines to the `.env` file:
+
+```
+VITE_FIREBASE_API_KEY=YOUR_FIREBASE_API_KEY
+VITE_GOOGLE_MAPS_API_KEY=YOUR_GOOGLE_MAPS_API_KEY
+```
+
+Replace `YOUR_FIREBASE_API_KEY` with your actual Firebase API key and `YOUR_GOOGLE_MAPS_API_KEY` with your actual Google Maps API key.
+
+4. Save the `.env` file.
+
+By adding the API keys to the `.env` file, you can securely store sensitive information without exposing it in your codebase.
+
+Remember to keep your `.env` file private and not share it publicly.
+
+That's it! You have successfully set up your `.env` file and added your API keys.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -130,78 +193,19 @@ This is an example of how to list things you need to use the software and how to
 
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ROADMAP -->
 
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-  - [ ] Nested Feature
-
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONTRIBUTING -->
-
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+- [x] Mark area via google map drawing manager
+- [x] Toastify user after creating or serching a game
+- [ ] Create Register and Login user.
+  - [ ] Connecting autechions to Firebase
+  - [ ] Display each user their created games
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-### Top contributors:
-
-<a href="https://github.com/github_username/repo_name/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=github_username/repo_name" alt="contrib.rocks image" />
-</a>
-
-<!-- LICENSE -->
-
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONTACT -->
-
-## Contact
-
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
-
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ACKNOWLEDGMENTS -->
-
-## Acknowledgments
-
-- []()
-- []()
-- []()
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
 [HTML5]: https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white
 [HTML5-url]: https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5
@@ -213,3 +217,5 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [Firebase-url]: https://firebase.google.com/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
+[Google-maps]: https://img.shields.io/badge/Google_Maps-4285F4?style=for-the-badge&logo=google-maps&logoColor=white
+[Google-maps-url]: https://developers.google.com/maps/documentation?hl=en
