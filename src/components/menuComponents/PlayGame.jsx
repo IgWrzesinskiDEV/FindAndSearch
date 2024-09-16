@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-import StartScreen from "../StartScreen";
+import StartScreen from "../startingGame/StartScreen";
 import QuestionScreen from "../startedGameComponents/QuestionScreen";
 
 export default function PlayGame() {

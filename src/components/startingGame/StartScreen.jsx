@@ -1,8 +1,8 @@
 import StartGameForm from "./StartGameForm";
 import { useSelector } from "react-redux";
 import Timer from "./Timer";
-import Section from "./UI/Section";
-import Loader from "./UI/Loader";
+import Section from "../UI/Section";
+import Loader from "../UI/Loader";
 import { Link } from "react-router-dom";
 
 import { RiMenuFold3Line } from "react-icons/ri";
@@ -16,7 +16,7 @@ export default function StartScreen() {
       <Section className="flex flex-col items-center">
         {currentGame === null && (
           <>
-            <Link to="/">
+            <Link to="/FindAndSearch/">
               <button className="absolute top-0 left-0 m-4 transition-transform duration-200 hover:scale-110 ">
                 <RiMenuFold3Line className="text-5xl text-primary" />
               </button>

@@ -32,7 +32,7 @@ export default function NewGame() {
       id: gameIdRef.current.value,
       questions: newGameQuestions,
     };
-    console.log(game);
+
     try {
       closeModalHandler(confirmModalRef);
       await dispatch(postNewGame(game));

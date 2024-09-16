@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useDispatch } from "react-redux";
-import { fetchGameId } from "../store/currentGameStore/gamesActions";
-import Button from "./UI/Button";
+import { fetchGameId } from "../../store/currentGameStore/gamesActions";
+import Button from "../UI/Button";
 
 export default function StartGameForm({ placeholder, label, name }) {
   const dispatch = useDispatch();
