@@ -34,7 +34,7 @@
     <a href="https://github.com/IgrWrz21/FindAndSearch"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/IgrWrz21/FindAndSearch">View Demo</a>
+    <a href="https://igrwrz21.github.io/FindAndSearch/">View Demo</a>
     ·
     <a href="https://github.com/IgrWrz21/FindAndSearch/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     ·
@@ -57,14 +57,13 @@
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
+        <li><a href="#getting-firebase-and-google-maps-api-key">Getting Firebase and Google Maps API Key</a></li>
+        <li><a href="#setting-up-env-file-and-api-keys">Setting up .env file and API Keys</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    
   </ol>
 </details>
 
@@ -84,7 +83,7 @@
 - [![TailwindCSS][TailwindCSS]][TailwindCSS-url]
 - [![Firebase][Firebase]][Firebase-url]
 - [![React][React.js]][React-url]
-
+- [![Redux][Redux]][Redux-url]
 - [![Google Maps][Google-maps]][Google-maps-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -245,3 +244,5 @@ To use the FindAndSearchGame, follow these steps:
 [React-url]: https://reactjs.org/
 [Google-maps]: https://img.shields.io/badge/Google_Maps-4285F4?style=for-the-badge&logo=google-maps&logoColor=white
 [Google-maps-url]: https://developers.google.com/maps/documentation?hl=en
+[Redux]: https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=redux&logoColor=white
+[Redux-url]: https://redux.js.org/

@@ -33,7 +33,7 @@ export default function StartScreen() {
           </>
         )}
         {isLoading && <Loader loaderText="Searching for a game..." />}
-        {currentGame !== null && <Timer initialTimer={1} />}
+        {currentGame !== null && <Timer initialTimer={10} />}
       </Section>
     </>
   );
