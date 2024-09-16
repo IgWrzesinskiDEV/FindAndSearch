@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import PlayGame from "./components/menuComponents/PlayGame";
 import CreateGame from "./components/menuComponents/CreateGame";
-import NotFound from "./components/menuComponents/notFound";
+import NotFound from "./components/menuComponents/NotFound";
 
 function App() {
   return (
