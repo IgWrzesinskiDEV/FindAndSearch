@@ -84,6 +84,7 @@
 - [![TailwindCSS][TailwindCSS]][TailwindCSS-url]
 - [![Firebase][Firebase]][Firebase-url]
 - [![React][React.js]][React-url]
+
 - [![Google Maps][Google-maps]][Google-maps-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -192,6 +193,31 @@ That's it! You have successfully set up your `.env` file and added your API keys
 <!-- USAGE EXAMPLES -->
 
 ## Usage
+
+To use the FindAndSearchGame, follow these steps:
+
+1. **Create a Game**:
+
+   - Set up a unique ID for the game.
+   - Create a list of questions. Each question should contain:
+     - Question text.
+     - Correct answer for the question.
+     - At least one marked area on Google Maps.
+   - You can search for a place or find it directly on Google Maps. After selecting the area, you can add the question.
+   - The map will be displayed for the user in the exact view as while adding questions. For example, if the user selects an area in Warsaw and then moves the map to Berlin, the selected area will be in Warsaw, but the user will first see Berlin. The zoom level is also copied.
+   - After adding all the questions you want, you can finalize and add the game.
+
+2. **Find a Game**:
+   - To find a game, type the unique ID of the game into the input field.
+   - If the game is found, a countdown timer will start.
+   - Questions will be displayed in random order.
+   - After correctly answering a question, the map with the marked area will be displayed.
+   - You can move through the questions until the last question.
+
+### Additional Information:
+
+- Answers are hashed to ensure that users cannot see the correct answers in developer tools.
+- Map coordinates are fetched only if the user's answer is correct.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
