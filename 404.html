@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Not Found</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #242424;
+        color: rgba(255, 255, 255, 0.87);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .container {
+        text-align: center;
+      }
+      h1 {
+        font-size: 3em;
+        margin-bottom: 0.5em;
+      }
+      p {
+        font-size: 1.2em;
+        margin-bottom: 1em;
+      }
+      a {
+        color: #1e90ff;
+        text-decoration: none;
+        font-size: 1.2em;
+      }
+    </style>
+    <script type="text/javascript">
+      // Redirect to the root URL
+      var path = window.location.pathname;
+      var newUrl = window.location.origin + "/FindAndSearch" + path;
+      window.location.replace(newUrl);
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Page Not Found</h1>
+      <p>Redirecting you to the homepage...</p>
+      <p>
+        If you are not redirected, <a href="/FindAndSearch/">click here</a>.
+      </p>
+    </div>
+  </body>
+</html>
