@@ -24,7 +24,7 @@ export default function CreateGame() {
     if (newGameQuestions.length > 0) {
       openConfrimModal();
     } else {
-      navigate("/FindAndSearch/");
+      navigate("/");
     }
   }
   function confirmExit() {

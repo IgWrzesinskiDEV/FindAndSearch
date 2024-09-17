@@ -1,11 +1,6 @@
 import Notification from "./components/UI/Notification";
 import WelcomeScreen from "./components/menuComponents/welcomeScreen";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import { HashRouter, Route, Routes, Navigate } from "react-router-dom";
 import PlayGame from "./components/menuComponents/PlayGame";
 import CreateGame from "./components/menuComponents/CreateGame";
 import NotFound from "./components/menuComponents/NotFound";
@@ -13,15 +8,15 @@ import NotFound from "./components/menuComponents/NotFound";
 function App() {
   return (
     <>
-      <Router>
+      <HashRouter>
         <Routes>
-          <Route path="/FindAndSearch" element={<WelcomeScreen />} />
-          <Route path="/FindAndSearch/playGame" element={<PlayGame />} />
-          <Route path="/FindAndSearch/createGame" element={<CreateGame />} />
-          <Route path="/FindAndSearch/404" element={<NotFound />} />
-          <Route path="*" element={<Navigate to="/FindAndSearch/404" />} />
+          <Route path="/" element={<WelcomeScreen />} />
+          <Route path="/playGame" element={<PlayGame />} />
+          <Route path="/createGame" element={<CreateGame />} />
+          <Route path="/404" element={<NotFound />} />
+          {/* <Route path="*" element={<Navigate to="/404" />} /> */}
         </Routes>
-      </Router>
+      </HashRouter>
       <Notification />
     </>
   );

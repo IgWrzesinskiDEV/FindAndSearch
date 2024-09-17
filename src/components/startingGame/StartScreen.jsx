@@ -16,7 +16,7 @@ export default function StartScreen() {
       <Section className="flex flex-col items-center">
         {currentGame === null && (
           <>
-            <Link to="/FindAndSearch/">
+            <Link to="/">
               <button className="absolute top-0 left-0 m-4 transition-transform duration-200 hover:scale-110 ">
                 <RiMenuFold3Line className="text-5xl text-primary" />
               </button>
