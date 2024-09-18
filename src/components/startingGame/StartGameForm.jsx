@@ -25,6 +25,7 @@ export default function StartGameForm({ placeholder, label, name }) {
         name={name}
         placeholder={placeholder}
         className="w-1/2 p-2 text-center border-2 rounded-md border-sky-500"
+        autoCapitalize="off"
       />
       <Button>Find Game</Button>
     </form>

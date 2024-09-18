@@ -83,15 +83,16 @@ export default function AddNewQuestion({
 
   return (
     <div className="flex flex-col items-center ">
-      <h1 className="mb-5 text-2xl font-bold uppercase text-primaryLighter">
+      <h1 className="w-3/4 mb-5 text-2xl font-bold text-center uppercase md:w-full text-primaryLighter">
         {title}
       </h1>
       <form
         onSubmit={handleSubmit}
         className="relative flex flex-col items-center justify-center w-full gap-4"
       >
+        {/* <div className="flex justify-between "> */}
         <Input
-          placeholder="Enter the question"
+          placeholder="Question text..."
           label="Question"
           name="questionText"
           error={error.questionText}
@@ -101,14 +102,15 @@ export default function AddNewQuestion({
           onBlur={onBlure}
         />
         <Input
-          placeholder="Correct answer to the question"
+          placeholder="Correct question answer..."
           label="Answer"
           name="answer"
           error={error.answer}
           editedValue={editedQuestion ? editedQuestion.questionData.answer : ""}
           onBlur={onBlure}
         />
-        <DrawingMap
+        {/* </div> */}
+        {/* <DrawingMap
           ref={mapRef}
           mapDataFromEdit={
             editedQuestion ? editedQuestion.mapData : editedQuestion
@@ -116,8 +118,8 @@ export default function AddNewQuestion({
         />
         {error.polygonsCords && (
           <p className="text-red-500">Required at least one area selected</p>
-        )}
-        <Button>{editedQuestion ? "Edit " : "Create "}</Button>
+        )} */}
+        <Button className="my-2">{editedQuestion ? "Edit " : "Create "}</Button>
       </form>
     </div>
   );
