@@ -84,6 +84,7 @@
 - [![Firebase][Firebase]][Firebase-url]
 - [![React][React.js]][React-url]
 - [![Redux][Redux]][Redux-url]
+- [![React Router][React-router]][React-router-url]
 - [![Google Maps][Google-maps]][Google-maps-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -229,6 +230,9 @@ To use the FindAndSearchGame, follow these steps:
 - [ ] Create Register and Login user.
   - [ ] Connecting autechions to Firebase
   - [ ] Display each user their created games
+  - [ ] Edit or Delete Created Games
+    - [ ] Allow users to edit questions and marked areas in their created games
+    - [ ] Enable users to delete their created games
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -246,3 +250,5 @@ To use the FindAndSearchGame, follow these steps:
 [Google-maps-url]: https://developers.google.com/maps/documentation?hl=en
 [Redux]: https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=redux&logoColor=white
 [Redux-url]: https://redux.js.org/
+[React-router]: https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white
+[React-router-url]: https://reactrouter.com/
