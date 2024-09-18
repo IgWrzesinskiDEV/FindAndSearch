@@ -26,11 +26,6 @@ import AutoCompleteComponent from "./map/AutoCompleteComponent";
 
 const libraries = ["drawing", "places"];
 const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-const mapContainerStyle = {
-  width: "95%",
-  height: "50vh",
-  margin: "10px",
-};
 
 let center = {
   lat: 52.0693,
@@ -43,7 +38,7 @@ let options = {
 };
 
 const DrawingMap = memo(
-  forwardRef(function DrawingMap({ mapDataFromEdit }, ref) {
+  forwardRef(function DrawingMap({ mapDataFromEdit, visable }, ref) {
     const isModalOpen = useSelector((state) => state.newMapData.isModalOpen);
 
     const [polygonsMvc, setPolygonsMvc] = useState([]);
@@ -134,10 +129,14 @@ const DrawingMap = memo(
     };
 
     return (
-      <>
+      <div
+        className={`w-full flex flex-col justify-center items-center gap-4 mt-4 ${
+          visable ? "block" : "hidden"
+        }`}
+      >
         <AutoCompleteComponent map={map} ref={inputRef} />
         <GoogleMap
-          mapContainerStyle={mapContainerStyle}
+          mapContainerClassName="w-10/12 h-[300px] lg:h-[500px] lg:mt-4  lg:mb-2 rounded-md"
           zoom={mapDataFromEdit ? mapDataFromEdit.mapInfo.zoom : options.zoom}
           center={
             mapDataFromEdit
@@ -172,10 +171,14 @@ const DrawingMap = memo(
             </>
           )}
         </GoogleMap>
-        <Button onClick={clearDrawingsClickHandler} type="button" className="">
+        <Button
+          onClick={clearDrawingsClickHandler}
+          type="button"
+          className="text-sm lg:text-xl"
+        >
           <GiBroom className="text-xl text-yellow-200 " /> Clear drawings
         </Button>
-      </>
+      </div>
     );
   })
 );

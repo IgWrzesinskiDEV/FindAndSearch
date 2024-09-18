@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import Button from "../UI/Button";
 import Input from "../UI/Input";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +7,7 @@ import { newGameDataActions } from "../../store/newGameStore/newGameData";
 
 import DrawingMap from "./DrawingMap";
 import { newMapDataActions } from "../../store/newMapStore/newMapData";
+import QuestionCreateSteper from "../UI/Stepper";
 
 export default function AddNewQuestion({
   onCloseModal,
@@ -15,7 +15,7 @@ export default function AddNewQuestion({
   editedQuestion,
 }) {
   const polygonsCords = useSelector((state) => state.newMapData.polygonsCords);
-
+  const activeStep = useSelector((state) => state.newGame.activeStep);
   const dispatch = useDispatch();
   const mapRef = useRef();
   const [error, setError] = useState({
@@ -83,19 +83,19 @@ export default function AddNewQuestion({
 
   return (
     <div className="flex flex-col items-center ">
-      <h1 className="w-3/4 mb-5 text-2xl font-bold text-center uppercase md:w-full text-primaryLighter">
+      <h1 className="w-3/4 mb-5 text-xl font-bold text-center uppercase lg:text-2xl md:w-full text-primaryLighter">
         {title}
       </h1>
       <form
         onSubmit={handleSubmit}
         className="relative flex flex-col items-center justify-center w-full gap-4"
       >
-        {/* <div className="flex justify-between "> */}
         <Input
           placeholder="Question text..."
           label="Question"
           name="questionText"
           error={error.questionText}
+          visable={activeStep === 0}
           editedValue={
             editedQuestion ? editedQuestion.questionData.questionText : ""
           }
@@ -106,20 +106,24 @@ export default function AddNewQuestion({
           label="Answer"
           name="answer"
           error={error.answer}
+          visable={activeStep === 0}
           editedValue={editedQuestion ? editedQuestion.questionData.answer : ""}
           onBlur={onBlure}
         />
-        {/* </div> */}
-        {/* <DrawingMap
+
+        <DrawingMap
           ref={mapRef}
+          visable={activeStep === 1}
           mapDataFromEdit={
             editedQuestion ? editedQuestion.mapData : editedQuestion
           }
         />
         {error.polygonsCords && (
           <p className="text-red-500">Required at least one area selected</p>
-        )} */}
-        <Button className="my-2">{editedQuestion ? "Edit " : "Create "}</Button>
+        )}
+
+        {/* <Button className="my-2">{editedQuestion ? "Edit " : "Create "}</Button> */}
+        <QuestionCreateSteper />
       </form>
     </div>
   );

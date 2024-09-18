@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useDispatch } from "react-redux";
 import { fetchGameId } from "../../store/currentGameStore/gamesActions";
 import Button from "../UI/Button";

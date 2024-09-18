@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialNewGameState = {
   newGameQuestions: [],
+  activeStep: 0,
 };
 
 const newGameData = createSlice({
@@ -24,6 +25,9 @@ const newGameData = createSlice({
     },
     resetNewGameQuestions(state) {
       state.newGameQuestions = [];
+    },
+    setActiveStep(state, action) {
+      state.activeStep = action.payload;
     },
   },
 });

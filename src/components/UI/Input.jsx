@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -10,12 +9,17 @@ const Input = forwardRef(function Input(
     error,
     editedValue = "",
     labelClassName = "",
+    visable = true,
     ...props
   },
   ref
 ) {
   return (
-    <div className="flex flex-col items-center w-full gap-y-4">
+    <div
+      className={`flex flex-col items-center w-full gap-y-4 ${
+        visable ? "block" : "hidden"
+      }`}
+    >
       {label && (
         <label htmlFor={name} className={labelClassName}>
           {label}
