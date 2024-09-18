@@ -91,23 +91,23 @@ export default function QuestionScreen() {
             This is the last question!
           </h1>
         )}
-        <h2 className="my-5 text-2xl font-bold uppercase text-cyan-500">
-          Question number {currentQuestionIndex + 1}
+        <h2 className="w-1/2 my-5 text-2xl font-bold text-center uppercase text-cyan-500">
+          Question {currentQuestionIndex + 1}
         </h2>
         <QuestionForm
-          placeholder="Type correct answer"
+          placeholder="Correct answer"
           label={currentQuestion.questionText}
           name="gameQuestion"
         />
         {isCorrectAnswer && mapData ? (
           <>
-            <p className="mt-6 text-3xl font-bold text-green-400">
+            <p className="mt-6 text-3xl font-bold text-center text-green-400">
               Correct Answer!
               <span role="img" aria-label="check" className="ml-1">
                 ✅
               </span>
             </p>
-            <p className="mt-6 text-xl font-bold">
+            <p className="mt-6 text-xl font-bold text-center">
               {isLastQuestion
                 ? "Go to finnal location!"
                 : "Go to next location!"}
@@ -118,7 +118,7 @@ export default function QuestionScreen() {
         ) : null}
         {!isCorrectAnswer && isCorrectAnswer !== null && (
           <p
-            className={`mt-6 text-3xl font-bold text-red-500 ${
+            className={`mt-6 text-3xl text-center font-bold text-red-500 ${
               isShaking ? "shake" : ""
             }`}
           >

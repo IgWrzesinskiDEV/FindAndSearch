@@ -14,14 +14,14 @@ export default function StartScreen() {
   return (
     <>
       <Section className="flex flex-col items-center">
-        {currentGame === null && (
+        {currentGame === null && !isLoading && (
           <>
             <Link to="/">
               <button className="absolute top-0 left-0 m-4 transition-transform duration-200 hover:scale-110 ">
                 <RiMenuFold3Line className="text-5xl text-primary" />
               </button>
             </Link>
-            <h1 className="my-3 text-2xl font-bold text-center uppercase text-sky-400">
+            <h1 className="w-1/2 my-3 text-2xl font-bold text-center uppercase break-words text-wrap text-sky-400">
               To start
               <br /> enter the game id
             </h1>

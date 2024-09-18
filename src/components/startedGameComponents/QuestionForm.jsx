@@ -43,7 +43,7 @@ export default function QuestionForm({ label, name, placeholder }) {
 
   return (
     <form
-      className="flex flex-col items-center justify-center w-4/5 gap-3 p-8 mx-auto border-2 rounded-md border-sky-500"
+      className="flex flex-col items-center justify-center w-4/5 gap-5 p-8 mx-auto border-2 rounded-md border-sky-500"
       onSubmit={submitHandler}
     >
       <label
@@ -58,7 +58,7 @@ export default function QuestionForm({ label, name, placeholder }) {
         disabled={isDisabled}
         ref={inputRef}
         placeholder={isDisabled ? "" : placeholder}
-        className="p-2 placeholder:p-2"
+        className="w-4/5 p-2 text-center border-2 rounded-md lg:w-1/2 placeholder:p-2 border-sky-500"
       />
       <Button disabled={isDisabled}>Check Answer</Button>
     </form>

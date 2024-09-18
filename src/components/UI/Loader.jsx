@@ -4,11 +4,8 @@ import Box from "@mui/material/Box";
 
 export default function Loader({ loaderText }) {
   return (
-    <Box
-      sx={{ display: "flex" }}
-      className="flex flex-col items-center justify-center gap-4 mt-4"
-    >
-      <h1 className="text-3xl uppercase">{loaderText}</h1>
+    <Box className="flex flex-col items-center justify-center w-full gap-4 h-lvh">
+      <h1 className="text-3xl text-center uppercase">{loaderText}</h1>
       <CircularProgress
         size={80}
         sx={{
