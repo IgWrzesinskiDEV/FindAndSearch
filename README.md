@@ -1,25 +1,5 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
-
 <a id="readme-top"></a>
 
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-
-<!-- PROJECT LOGO -->
 <br />
 <div align="center">
   <a href="https://github.com/IgrWrz21/FindAndSearch">
@@ -85,6 +65,7 @@
 - [![React][React.js]][React-url]
 - [![Redux][Redux]][Redux-url]
 - [![React Router][React-router]][React-router-url]
+- [![MUI][MUI]][MUI-url]
 - [![Google Maps][Google-maps]][Google-maps-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -252,3 +233,5 @@ To use the FindAndSearchGame, follow these steps:
 [Redux-url]: https://redux.js.org/
 [React-router]: https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white
 [React-router-url]: https://reactrouter.com/
+[MUI]: https://img.shields.io/badge/MUI-007FFF?style=for-the-badge&logo=mui&logoColor=white
+[MUI-url]: https://mui.com/

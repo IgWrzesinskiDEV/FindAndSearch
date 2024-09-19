@@ -3,6 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialNewGameState = {
   newGameQuestions: [],
   activeStep: 0,
+  subbmitedQuestionErors: {
+    questionText: false,
+    answer: false,
+    polygonsCords: false,
+  },
 };
 
 const newGameData = createSlice({
@@ -28,6 +33,9 @@ const newGameData = createSlice({
     },
     setActiveStep(state, action) {
       state.activeStep = action.payload;
+    },
+    setSubbmitedQuestionErors(state, action) {
+      state.subbmitedQuestionErors = action.payload;
     },
   },
 });

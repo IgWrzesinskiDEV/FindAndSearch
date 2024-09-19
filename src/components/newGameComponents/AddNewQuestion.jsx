@@ -1,7 +1,7 @@
 import Button from "../UI/Button";
 import Input from "../UI/Input";
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import isEmpty from "../../validate";
 import { newGameDataActions } from "../../store/newGameStore/newGameData";
 
@@ -14,21 +14,41 @@ export default function AddNewQuestion({
   title,
   editedQuestion,
 }) {
+  console.log(editedQuestion, "editedQuestion");
+
   const polygonsCords = useSelector((state) => state.newMapData.polygonsCords);
   const activeStep = useSelector((state) => state.newGame.activeStep);
   const dispatch = useDispatch();
   const mapRef = useRef();
-  const [error, setError] = useState({
-    questionText: false,
-    answer: false,
-    polygonsCords: false,
-  });
+  const errors = useSelector((state) => state.newGame.subbmitedQuestionErors);
+
+  useEffect(() => {
+    if (editedQuestion) {
+      dispatch(
+        newMapDataActions.overWritePolygons(
+          editedQuestion.mapData.polygonsCords
+        )
+      );
+    }
+  }, [dispatch, editedQuestion]);
 
   function onBlure(e) {
     if (isEmpty(e.target.value)) {
-      setError((prev) => ({ ...prev, [e.target.name]: true }));
+      dispatch(
+        newGameDataActions.setSubbmitedQuestionErors({
+          ...errors,
+          [e.target.name]: true,
+        })
+      );
+      //setError((prev) => ({ ...prev, [e.target.name]: true }));
     } else {
-      setError((prev) => ({ ...prev, [e.target.name]: false }));
+      dispatch(
+        newGameDataActions.setSubbmitedQuestionErors({
+          ...errors,
+          [e.target.name]: false,
+        })
+      );
+      //setError((prev) => ({ ...prev, [e.target.name]: false }));
     }
   }
 
@@ -36,15 +56,31 @@ export default function AddNewQuestion({
     e.preventDefault();
     const formData = new FormData(e.target);
     const qAndA = Object.fromEntries(formData.entries());
+    console.log(qAndA);
 
     for (const key in qAndA) {
       if (isEmpty(qAndA[key])) {
-        setError((prev) => ({ ...prev, [key]: true }));
+        dispatch(
+          newGameDataActions.setSubbmitedQuestionErors({
+            ...errors,
+            [key]: true,
+          })
+        );
+        //setError((prev) => ({ ...prev, [key]: true }));
       }
     }
     if (polygonsCords.length === 0) {
-      setError((prev) => ({ ...prev, polygonsCords: true }));
+      dispatch(
+        newGameDataActions.setSubbmitedQuestionErors({
+          ...errors,
+          polygonsCords: true,
+        })
+      );
+      //setError((prev) => ({ ...prev, polygonsCords: true }));
     }
+    console.log(errors);
+    console.log(polygonsCords);
+
     if (
       isEmpty(qAndA.questionText) ||
       isEmpty(qAndA.answer) ||
@@ -71,15 +107,21 @@ export default function AddNewQuestion({
     }
 
     dispatch(newMapDataActions.resetPolygons());
-
+    dispatch(newGameDataActions.setActiveStep(0));
     onCloseModal();
   }
 
   useEffect(() => {
     if (polygonsCords.length > 0) {
-      setError((prev) => ({ ...prev, polygonsCords: false }));
+      //setError((prev) => ({ ...prev, polygonsCords: false }));
+      dispatch(
+        newGameDataActions.setSubbmitedQuestionErors({
+          ...errors,
+          polygonsCords: false,
+        })
+      );
     }
-  }, [polygonsCords]);
+  }, [polygonsCords, dispatch]);
 
   return (
     <div className="flex flex-col items-center ">
@@ -94,7 +136,7 @@ export default function AddNewQuestion({
           placeholder="Question text..."
           label="Question"
           name="questionText"
-          error={error.questionText}
+          error={errors.questionText}
           visable={activeStep === 0}
           editedValue={
             editedQuestion ? editedQuestion.questionData.questionText : ""
@@ -105,7 +147,7 @@ export default function AddNewQuestion({
           placeholder="Correct question answer..."
           label="Answer"
           name="answer"
-          error={error.answer}
+          error={errors.answer}
           visable={activeStep === 0}
           editedValue={editedQuestion ? editedQuestion.questionData.answer : ""}
           onBlur={onBlure}
@@ -118,12 +160,12 @@ export default function AddNewQuestion({
             editedQuestion ? editedQuestion.mapData : editedQuestion
           }
         />
-        {error.polygonsCords && (
+        {errors.polygonsCords && (
           <p className="text-red-500">Required at least one area selected</p>
         )}
 
         {/* <Button className="my-2">{editedQuestion ? "Edit " : "Create "}</Button> */}
-        <QuestionCreateSteper />
+        <QuestionCreateSteper createQuestionHandler={handleSubmit} />
       </form>
     </div>
   );
