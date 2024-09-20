@@ -40,7 +40,7 @@ let options = {
 const DrawingMap = memo(
   forwardRef(function DrawingMap({ mapDataFromEdit, visable }, ref) {
     const isModalOpen = useSelector((state) => state.newMapData.isModalOpen);
-
+    const errors = useSelector((state) => state.newGame.subbmitedQuestionErors);
     const [polygonsMvc, setPolygonsMvc] = useState([]);
     const dispatch = useDispatch();
     const [map, setMap] = useState(null);
@@ -145,6 +145,8 @@ const DrawingMap = memo(
           }
           options={{
             streetViewControl: false,
+            fullscreenControl: true,
+            mapTypeControl: false,
           }}
           onLoad={onMapLoad}
         >
@@ -171,6 +173,9 @@ const DrawingMap = memo(
             </>
           )}
         </GoogleMap>
+        {errors.polygonsCords && (
+          <p className="text-red-500">Required at least one area selected</p>
+        )}
         <Button
           onClick={clearDrawingsClickHandler}
           type="button"

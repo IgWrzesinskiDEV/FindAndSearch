@@ -35,7 +35,18 @@ const newGameData = createSlice({
       state.activeStep = action.payload;
     },
     setSubbmitedQuestionErors(state, action) {
-      state.subbmitedQuestionErors = action.payload;
+      state.subbmitedQuestionErors = {
+        ...state.subbmitedQuestionErors,
+        ...action.payload,
+      };
+    },
+    onCloseModalResets(state) {
+      state.activeStep = 0;
+      state.subbmitedQuestionErors = {
+        questionText: false,
+        answer: false,
+        polygonsCords: false,
+      };
     },
   },
 });

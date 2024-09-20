@@ -1,4 +1,3 @@
-import Button from "../UI/Button";
 import Input from "../UI/Input";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef, useEffect } from "react";
@@ -14,14 +13,13 @@ export default function AddNewQuestion({
   title,
   editedQuestion,
 }) {
-  console.log(editedQuestion, "editedQuestion");
-
   const polygonsCords = useSelector((state) => state.newMapData.polygonsCords);
   const activeStep = useSelector((state) => state.newGame.activeStep);
   const dispatch = useDispatch();
   const mapRef = useRef();
   const errors = useSelector((state) => state.newGame.subbmitedQuestionErors);
-
+  const QuestionRef = useRef();
+  const AnswerRef = useRef();
   useEffect(() => {
     if (editedQuestion) {
       dispatch(
@@ -40,7 +38,6 @@ export default function AddNewQuestion({
           [e.target.name]: true,
         })
       );
-      //setError((prev) => ({ ...prev, [e.target.name]: true }));
     } else {
       dispatch(
         newGameDataActions.setSubbmitedQuestionErors({
@@ -48,15 +45,13 @@ export default function AddNewQuestion({
           [e.target.name]: false,
         })
       );
-      //setError((prev) => ({ ...prev, [e.target.name]: false }));
     }
   }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const qAndA = Object.fromEntries(formData.entries());
-    console.log(qAndA);
+  function handleFinish() {
+    const qAndA = {
+      questionText: QuestionRef.current.value,
+      answer: AnswerRef.current.value,
+    };
 
     for (const key in qAndA) {
       if (isEmpty(qAndA[key])) {
@@ -66,7 +61,6 @@ export default function AddNewQuestion({
             [key]: true,
           })
         );
-        //setError((prev) => ({ ...prev, [key]: true }));
       }
     }
     if (polygonsCords.length === 0) {
@@ -76,10 +70,7 @@ export default function AddNewQuestion({
           polygonsCords: true,
         })
       );
-      //setError((prev) => ({ ...prev, polygonsCords: true }));
     }
-    console.log(errors);
-    console.log(polygonsCords);
 
     if (
       isEmpty(qAndA.questionText) ||
@@ -89,7 +80,8 @@ export default function AddNewQuestion({
       return;
     }
 
-    e.target.reset();
+    QuestionRef.current.value = "";
+    AnswerRef.current.value = "";
 
     const question = {
       questionData: { questionText: qAndA.questionText, answer: qAndA.answer },
@@ -113,7 +105,6 @@ export default function AddNewQuestion({
 
   useEffect(() => {
     if (polygonsCords.length > 0) {
-      //setError((prev) => ({ ...prev, polygonsCords: false }));
       dispatch(
         newGameDataActions.setSubbmitedQuestionErors({
           ...errors,
@@ -128,10 +119,7 @@ export default function AddNewQuestion({
       <h1 className="w-3/4 mb-5 text-xl font-bold text-center uppercase lg:text-2xl md:w-full text-primaryLighter">
         {title}
       </h1>
-      <form
-        onSubmit={handleSubmit}
-        className="relative flex flex-col items-center justify-center w-full gap-4"
-      >
+      <form className="relative flex flex-col items-center justify-center w-full gap-4">
         <Input
           placeholder="Question text..."
           label="Question"
@@ -142,6 +130,7 @@ export default function AddNewQuestion({
             editedQuestion ? editedQuestion.questionData.questionText : ""
           }
           onBlur={onBlure}
+          ref={QuestionRef}
         />
         <Input
           placeholder="Correct question answer..."
@@ -150,6 +139,7 @@ export default function AddNewQuestion({
           error={errors.answer}
           visable={activeStep === 0}
           editedValue={editedQuestion ? editedQuestion.questionData.answer : ""}
+          ref={AnswerRef}
           onBlur={onBlure}
         />
 
@@ -160,12 +150,12 @@ export default function AddNewQuestion({
             editedQuestion ? editedQuestion.mapData : editedQuestion
           }
         />
-        {errors.polygonsCords && (
-          <p className="text-red-500">Required at least one area selected</p>
-        )}
 
-        {/* <Button className="my-2">{editedQuestion ? "Edit " : "Create "}</Button> */}
-        <QuestionCreateSteper createQuestionHandler={handleSubmit} />
+        <QuestionCreateSteper
+          question={QuestionRef.current ? QuestionRef.current.value : ""}
+          answer={AnswerRef.current ? AnswerRef.current.value : ""}
+          handleFinish={handleFinish}
+        />
       </form>
     </div>
   );

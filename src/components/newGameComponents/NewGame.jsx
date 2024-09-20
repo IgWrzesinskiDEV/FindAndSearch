@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { postNewGame } from "../../store/newGameStore/newGamesActions";
 import { useDispatch } from "react-redux";
 import { newMapDataActions } from "../../store/newMapStore/newMapData";
+import { newGameDataActions } from "../../store/newGameStore/newGameData";
 import AddNewGameSection from "./AddNewGameSection";
 
 export default function NewGame() {
@@ -24,6 +25,8 @@ export default function NewGame() {
   }
   function closeModalHandler(modalRef) {
     modalRef.current.close();
+
+    dispatch(newGameDataActions.onCloseModalResets());
     dispatch(newMapDataActions.toogleModal());
   }
 

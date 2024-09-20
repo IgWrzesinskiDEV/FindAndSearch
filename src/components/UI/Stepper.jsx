@@ -5,16 +5,46 @@ import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useDispatch, useSelector } from "react-redux";
-
+import isEmpty from "../../validate";
 const steps = ["Create question", "Select area"];
 import { newGameDataActions } from "../../store/newGameStore/newGameData";
 
-export default function QuestionCreateSteper({ createQuestionHandler }) {
+export default function QuestionCreateSteper({
+  question,
+  answer,
+  handleFinish,
+}) {
   const dispatch = useDispatch();
   const activeStep = useSelector((state) => state.newGame.activeStep);
   const errors = useSelector((state) => state.newGame.subbmitedQuestionErors);
+
+  function validateQAndA(question, answer) {
+    if (isEmpty(question)) {
+      dispatch(
+        newGameDataActions.setSubbmitedQuestionErors({
+          questionText: true,
+        })
+      );
+    }
+    if (isEmpty(answer)) {
+      dispatch(
+        newGameDataActions.setSubbmitedQuestionErors({
+          answer: true,
+        })
+      );
+    }
+  }
   const handleNext = () => {
-    dispatch(newGameDataActions.setActiveStep(activeStep + 1));
+    switch (activeStep) {
+      case 0:
+        validateQAndA(question, answer);
+
+        dispatch(newGameDataActions.setActiveStep(activeStep + 1));
+        break;
+
+      default:
+        break;
+    }
   };
 
   const handleBack = () => {
@@ -57,8 +87,8 @@ export default function QuestionCreateSteper({ createQuestionHandler }) {
         </Button>
 
         <Button
-          onClick={handleNext}
-          type={activeStep === steps.length ? "submit" : "button"}
+          onClick={activeStep !== steps.length - 1 ? handleNext : handleFinish}
+          disabled={activeStep === 0 && (errors.questionText || errors.answer)}
           sx={{
             color: "#38bdf8",
             fontWeight: "bold",
@@ -74,8 +104,14 @@ export default function QuestionCreateSteper({ createQuestionHandler }) {
           const labelProps = {};
           if (isStepFailed(index)) {
             labelProps.optional = (
-              <Typography variant="caption" color="error">
-                Alert message
+              <Typography
+                variant="caption"
+                color="error"
+                sx={{
+                  fontSize: ["0.6rem", "1.2rem"],
+                }}
+              >
+                Required value
               </Typography>
             );
 
@@ -85,7 +121,7 @@ export default function QuestionCreateSteper({ createQuestionHandler }) {
             <Step
               key={label}
               sx={{
-                p: 1,
+                p: [0.1, 2],
                 fontSize: "1.2rem",
               }}
               root={{

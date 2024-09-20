@@ -3,7 +3,6 @@
 import TablePopOver from "../UI/TablePopOver";
 import { useRef, useState } from "react";
 import { MdEditNote } from "react-icons/md";
-// import { FaRegCircleXmark } from "react-icons/fa6";
 import { FaTrashAlt } from "react-icons/fa";
 import { FaRegCircleXmark } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
@@ -26,7 +25,6 @@ export default function NewQuestion({ question }) {
     dispatch(newGameDataActions.deleteNewGameQuestion(id));
   }
   function editQuestionHandler() {
-    console.log(question);
     dispatch(
       newMapDataActions.overWritePolygons(question.mapData.polygonsCords)
     );
