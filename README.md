@@ -214,6 +214,7 @@ To use the FindAndSearchGame, follow these steps:
   - [ ] Edit or Delete Created Games
     - [ ] Allow users to edit questions and marked areas in their created games
     - [ ] Enable users to delete their created games
+- [x] Add saving and reading currently played game from localStorage
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
