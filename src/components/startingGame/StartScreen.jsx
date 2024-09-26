@@ -10,6 +10,15 @@ import { RiMenuFold3Line } from "react-icons/ri";
 export default function StartScreen() {
   const currentGame = useSelector((state) => state.game.currentGame);
   const isLoading = useSelector((state) => state.app.isLoading);
+  let timer = 10;
+  const questionsDisplayed = JSON.parse(localStorage.getItem("questionsDisplayed"));
+
+  if (questionsDisplayed) {
+    timer = 0;
+  }
+  if (questionsDisplayed && questionsDisplayed.length === 1 && questionsDisplayed[0].correctAnswer === null) {
+    timer = 10;
+  }
 
   return (
     <>
@@ -33,7 +42,7 @@ export default function StartScreen() {
           </>
         )}
         {isLoading && <Loader loaderText="Searching for a game..." />}
-        {currentGame !== null && <Timer initialTimer={10} />}
+        {currentGame !== null && <Timer initialTimer={timer} />}
       </Section>
     </>
   );

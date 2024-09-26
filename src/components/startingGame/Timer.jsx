@@ -8,6 +8,7 @@ export default function Timer({ initialTimer }) {
   const dispatch = useDispatch();
   const location = useLocation();
 
+
   useEffect(() => {
     const interval = setInterval(() => {
       setTime((time) => time - 1);
