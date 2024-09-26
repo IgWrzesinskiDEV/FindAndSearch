@@ -1,9 +1,19 @@
 import { useDispatch } from "react-redux";
 import { fetchGameId } from "../../store/currentGameStore/gamesActions";
 import Button from "../UI/Button";
+import { useEffect } from "react";
+import { gameDataActions } from "../../store/currentGameStore/gameData";
+import { current } from "@reduxjs/toolkit";
 
 export default function StartGameForm({ placeholder, label, name }) {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (localStorage.getItem("currentGame") && localStorage.getItem("questionsDisplayed")) {
+      dispatch(gameDataActions.setCurrentGameFromLS({ currentGame: JSON.parse(localStorage.getItem("currentGame")), questionsDispleyed: JSON.parse(localStorage.getItem("questionsDisplayed")) }));
+
+    }
+  }, [dispatch]);
   function submitHandler(e) {
     e.preventDefault();
     const formData = new FormData(e.target);

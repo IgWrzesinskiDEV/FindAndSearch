@@ -25,6 +25,12 @@ const gameData = createSlice({
         correctAnswer: null,
         questionIndex: 0,
       });
+      localStorage.setItem("questionsDisplayed", JSON.stringify(state.questionsDispleyed));
+    },
+    setCurrentGameFromLS: (state, action) => {
+      state.currentGame = action.payload.currentGame;
+      state.currentGameQuestions = state.currentGame.questionsData;
+      state.questionsDispleyed = action.payload.questionsDispleyed;
     },
 
     setGameIsStarted: (state, action) => {
@@ -38,11 +44,14 @@ const gameData = createSlice({
     },
     pushQuestionsDispleyed: (state, action) => {
       state.questionsDispleyed.push(action.payload);
+      localStorage.setItem("questionsDisplayed", JSON.stringify(state.questionsDispleyed));
+
       state.currentQuestionIndex++;
     },
     setAnswerState: (state, action) => {
       state.questionsDispleyed[state.currentQuestionIndex].correctAnswer =
         action.payload;
+      localStorage.setItem("questionsDisplayed", JSON.stringify(state.questionsDispleyed));
     },
     setCurrentMap: (state, action) => {
       state.currentMap = action.payload;

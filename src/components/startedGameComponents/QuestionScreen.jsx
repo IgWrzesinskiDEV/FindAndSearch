@@ -60,6 +60,8 @@ export default function QuestionScreen() {
 
   function exitGameHandler() {
     dispatch(gameDataActions.resetGame());
+    localStorage.removeItem("currentGame");
+    localStorage.removeItem("questionsDisplayed");
     confirmModalRef.current.close();
   }
   function closeExtiModal() {
@@ -118,9 +120,8 @@ export default function QuestionScreen() {
         ) : null}
         {!isCorrectAnswer && isCorrectAnswer !== null && (
           <p
-            className={`mt-6 text-3xl text-center font-bold text-red-500 ${
-              isShaking ? "shake" : ""
-            }`}
+            className={`mt-6 text-3xl text-center font-bold text-red-500 ${isShaking ? "shake" : ""
+              }`}
           >
             Incorrect Answer!
             <span role="img" aria-label="cross" className="ml-1">

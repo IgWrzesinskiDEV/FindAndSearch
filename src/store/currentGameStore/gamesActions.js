@@ -15,6 +15,9 @@ export const fetchGameId = (gameId) => {
       if (gameDoc.exists()) {
         dispatch(gameDataActions.setCurrentGame(gameDoc.data()));
         toast.success("Game found!");
+
+        localStorage.setItem("currentGame", JSON.stringify(gameDoc.data()));
+
       } else {
         toast.error("Game not found!");
       }
