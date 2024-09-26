@@ -6,6 +6,7 @@ const initialGameState = {
   currentQuestionIndex: 0,
   questionsDispleyed: [],
   currentMap: null,
+  isCheckingAnswer: false,
 };
 
 const gameData = createSlice({
@@ -55,6 +56,9 @@ const gameData = createSlice({
     },
     setCurrentMap: (state, action) => {
       state.currentMap = action.payload;
+    },
+    setIsCheckingAnswer: (state, action) => {
+      state.isCheckingAnswer = action.payload;
     },
     resetGame: () => initialGameState,
   },

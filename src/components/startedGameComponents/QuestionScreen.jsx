@@ -8,12 +8,13 @@ import { gameDataActions } from "../../store/currentGameStore/gameData";
 import { fetchMapData } from "../../store/currentGameStore/gamesActions";
 import { useEffect, useRef } from "react";
 import Modal from "../UI/Modal";
-
+import Loader from "../UI/Loader";
 import ConfirmExit from "../UI/ConfirmExit";
 export default function QuestionScreen() {
   const confirmModalRef = useRef();
   const currentGameId = useSelector((state) => state.game.currentGame.gameId);
   const isShaking = useSelector((state) => state.app.isShaking);
+  const isCheckingAnswer = useSelector((state) => state.game.isCheckingAnswer);
   const questionsDispleyed = useSelector(
     (state) => state.game.questionsDispleyed
   );
@@ -101,6 +102,7 @@ export default function QuestionScreen() {
           label={currentQuestion.questionText}
           name="gameQuestion"
         />
+        {isCheckingAnswer && <Loader loaderText="Checking answer..." />}
         {isCorrectAnswer && mapData ? (
           <>
             <p className="mt-6 text-3xl font-bold text-center text-green-400">

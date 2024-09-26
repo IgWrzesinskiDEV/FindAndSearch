@@ -20,14 +20,17 @@ export default function QuestionForm({ label, name, placeholder }) {
 
   const inputRef = useRef();
   let isDisabled = correctAnswer;
+
+
   async function submitHandler(e) {
     e.preventDefault();
     const userAnswer = inputRef.current.value;
-
+    dispatch(gameDataActions.setIsCheckingAnswer(true));
     const isCorectAnswer = await checkUserAnswer(
       userAnswer.toLowerCase(),
       currentQuestionAnswer
     );
+    dispatch(gameDataActions.setIsCheckingAnswer(false));
     if (isCorectAnswer) {
       isDisabled = true;
       dispatch(gameDataActions.setAnswerState(true));
