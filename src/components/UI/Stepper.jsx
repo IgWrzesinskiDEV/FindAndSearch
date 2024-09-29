@@ -35,15 +35,9 @@ export default function QuestionCreateSteper({
     }
   }
   const handleNext = () => {
-    switch (activeStep) {
-      case 0:
-        validateQAndA(question, answer);
-
-        dispatch(newGameDataActions.setActiveStep(activeStep + 1));
-        break;
-
-      default:
-        break;
+    if (activeStep === 0) {
+      validateQAndA(question, answer);
+      dispatch(newGameDataActions.setActiveStep(activeStep + 1));
     }
   };
 
