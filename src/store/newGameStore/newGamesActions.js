@@ -2,8 +2,7 @@ import { toast } from "react-toastify";
 import { db } from "../../firebase/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { newGameDataActions } from "./newGameData";
-// Add a new document in collection "cities"
-import { hashCorrectAnswer } from "../../hashing";
+import { hashCorrectAnswer } from "../../util/hashing";
 export const postNewGame = (game) => {
   return async (dispatch) => {
     try {

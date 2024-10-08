@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
 import Button from "../UI/Button";
 import { gameDataActions } from "../../store/currentGameStore/gameData";
-import { checkUserAnswer } from "../../hashing";
+import { checkUserAnswer } from "../../util/hashing";
 import { appDataActions } from "../../store/appStore/appData";
 export default function QuestionForm({ label, name, placeholder }) {
   const dispatch = useDispatch();
@@ -20,7 +20,6 @@ export default function QuestionForm({ label, name, placeholder }) {
 
   const inputRef = useRef();
   let isDisabled = correctAnswer;
-
 
   async function submitHandler(e) {
     e.preventDefault();

@@ -5,7 +5,7 @@ import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useDispatch, useSelector } from "react-redux";
-import isEmpty from "../../validate";
+import isEmpty from "../../util/validate";
 const steps = ["Create question", "Select area"];
 import { newGameDataActions } from "../../store/newGameStore/newGameData";
 

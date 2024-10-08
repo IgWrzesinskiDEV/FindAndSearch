@@ -1,7 +1,7 @@
 import Input from "../UI/Input";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef, useEffect } from "react";
-import isEmpty from "../../validate";
+import isEmpty from "../../util/validate";
 import { newGameDataActions } from "../../store/newGameStore/newGameData";
 
 import DrawingMap from "./DrawingMap";

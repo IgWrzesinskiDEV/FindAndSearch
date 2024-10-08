@@ -10,11 +10,12 @@ const Modal = forwardRef(function Modal({ children }, ref) {
     () => ({
       open: () => {
         setIsOpen(true);
+        document.body.classList.add("no-scroll");
       },
       close: () => {
         modalRef.current.close();
-
         setIsOpen(false);
+        document.body.classList.remove("no-scroll");
       },
     }),
     [setIsOpen]
@@ -24,7 +25,7 @@ const Modal = forwardRef(function Modal({ children }, ref) {
       {isOpen && (
         <dialog
           ref={modalRef}
-          className="fixed inset-0 z-50 flex items-center justify-center overflow-auto w-full   bg-transparent h-[100dvh]"
+          className="fixed inset-0 z-50 flex items-center justify-center overflow-auto w-full   bg-transparent h-[100dvh] "
         >
           <div className="relative w-10/12 p-4 my-6 overflow-auto border-2 rounded-md shadow-lg max-h-[90vh] lg:w-1/2 bg-bgcColor border-sky-500">
             {children}
