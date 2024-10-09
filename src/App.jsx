@@ -1,5 +1,5 @@
 import Notification from "./components/UI/Notification";
-import WelcomeScreen from "./components/menuComponents/WelcomeScreen";
+import WelcomeScreen from "./components/menuComponents/welcomeScreen";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import PlayGame from "./components/menuComponents/PlayGame";
 import CreateGame from "./components/menuComponents/CreateGame";
